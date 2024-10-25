@@ -1,68 +1,126 @@
-#  ☕ PROYECTO DIPLOMADO JAVA ☕️
-## 🤓 Francisco Miztli López Salinas 🤓
+# 🏪 Sistema de Administración de Tienda de Abarrotes
 
------
-## Descripción del Proyecto
-Un proyecto para la administración de una pequeña tienda de abarrotes.
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
+![Thymeleaf](https://img.shields.io/badge/Thymeleaf-%23005C0F.svg?style=for-the-badge&logo=Thymeleaf&logoColor=white)
 
-## Tecnologías utilizadas
-- **Java**
-- **Spring Boot**
-- **Thymeleaf**
-- **JPA**
-- **MariaDB**
+## 📋 Descripción
+Sistema web para la gestión y administración de una tienda de abarrotes. Desarrollado como proyecto final para el Diplomado en Java.
 
-## **Instrucciones para ejecutar** 
-### 1.- Clona el repo e importalo en **Intellij**
-``` 
+### 👨‍💻 Autor
+Francisco Miztli López Salinas
+
+## 🛠️ Tecnologías Utilizadas
+- Java (JDK 17+)
+- Spring Boot 3.x
+- Spring Data JPA
+- Thymeleaf (Motor de plantillas)
+- MariaDB (Base de datos)
+- Maven (Gestión de dependencias)
+
+## ✨ Características
+- Gestión de productos
+- Administración de categorías
+- Control de proveedores
+- Manejo de imágenes
+- Gestión de contactos (teléfonos y correos)
+- Operaciones CRUD completas para las principales entidades
+
+## 🚀 Guía de Instalación
+
+## 📂 Estructura del proyecto importante
+```bash
+tiendaAbarrotes/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   ├── resources/
+│   │   │   ├── application.properties
+│   │   │   ├── schema.sql
+│   │   │   └── data.sql
+│   └── test/
+│       └── java/mx/unam/dgtic/
+│           └── PVIFranciscoLopezApplicationTests.java
+```
+
+### Prerrequisitos
+- Java JDK 17 o superior
+- Maven 3.6+
+- MariaDB 10.x
+- IDE (recomendado: IntelliJ IDEA)
+- Git (Opctional)
+
+### 1. Clonar el Repositorio
+```bash
 git clone https://github.com/1franky/tiendaAbarrotes.git
-``` 
----
-### 2.- Dirígete al archivo application *application.properties* ubicado en `src/main/resources/` y busca las siguinetes lineas
-```
-# Images
-app.upload.dir=/Users/franciscolopez/imagesProyectos/springWeb/
-# app.upload.dir=C:\\springWeb\\
-spring.servlet.multipart.max-file-size = 5MB
-spring.servlet.multipart.max-request-size = 5MB
+cd tiendaAbarrotes
 ```
 
-### Comenta la linea 
-- `app.upload.dir=/Users/franciscolopez/imagesProyectos/springWeb/`  
-y descomenta la linea 
--  `#app.upload.dir=C:\\springWeb\\`
+### 2. Configuración del Almacenamiento de Imágenes  
+2.1. Localiza el archivo `application.properties` en `src/main/resources/`  
+2.2. Configura el directorio de almacenamiento de imágenes:
+   ```properties
+   # Comenta esta línea
+   # app.upload.dir=/Users/franciscolopez/imagesProyectos/springWeb/
+  
+   # Descomenta y usa esta línea para Windows
+   app.upload.dir=C:\\springWeb\\
+   ```
 
-### Dirigete a la Ruta C:\\ y create la carpeta `springWeb`
+3. Crea el directorio `springWeb` en la unidad C: (Windows)
+4. Descomprime el archivo `images.zip` en `C:\springWeb\`
 
-____
+### 3. Configuración de la Base de Datos   
+3.1. En `application.properties`, configura los datos de conexión:
 
-### 3.- Descomprime la carpeta `images.zip` en la carpeta recien creada de tal modo que quede  `C:\\springWeb\\images`
+   ```properties
+   spring.datasource.url=jdbc:mariadb://localhost:3306/pvi
+   spring.datasource.username=tu_usuario
+   spring.datasource.password=tu_contraseña
+   spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+   ```
 
---- 
-### 4.- Regresa al archivo *application.properties* ubicado en `src/main/resources/` y busca las siguientes lineas.
+### 4. Inicialización de la Base de Datos
+Tienes dos opciones:
+#### Opción A: Ejecución Manual
+4.1. Localiza los archivos en `src/main/resources/`:
+    - `schema.sql` (estructura de la base de datos)
+    - `data.sql` (datos de prueba)
+4.2. Ejecuta estos scripts en tu servidor MariaDB
+
+#### Opción B: Ejecución Automatizada
+4.1. Ejecuta `PVIFranciscoLopezApplicationTests` ubicado en `src/test/java/mx/unam/dgtic`   
+4.2. Esto creará el schema y cargará los datos automáticamente
+
+
+### 5. Ejecutar la Aplicación
+```bash
+mvn spring-boot:run
 ```
-spring.datasource.url=jdbc:mariadb://localhost:3306/pvi
-spring.datasource.username=root
-#spring.datasource.password=${passwordDB}
-spring.datasource.password=Francisco31.
-spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
-```
-#### Configura la url username y password de tu base de datos.
 
-### 5.- Dentro de `src/main/resources/` se encuentran los siguientes ficheros:
-* **schema.sql**
-* **data.sql**
+La aplicación estará disponible en: http://localhost:8080
 
-En estos se encuentran la definición de la base de datos como algunos datos de prueba.
+## 📝 Estado del Proyecto
 
-#### 5.1.- Ejecuta estos archivos en tu base datos local.
-#### 5.2.- En lugar de ejcutar estos archivos en tu consola puedes Ejecuatar *`PVIFranciscoLopezApplicationTests`* ubicado en `src/test/java/mx/unam/dgtic` y ejecutalo esto creara el schema y cargara los datos
+### Funcionalidades Implementadas (CRUD Completo) mediante interfaz web
+- ✅ Categorías
+- ✅ Imágenes
+- ✅ Proveedores
+- ✅ Teléfonos
+- ✅ Correos electrónicos (No enviar solo catalogo)
 
+### En Desarrollo
+- ⚠️ Productos (CRUD parcial)
+- ⚠️ USERS (Sin empezar)
+- ⚠️ Tickets (Sin empezar)
+- ⚠️ Clients (Sin empezar)
 
----
+## 🤝 Contribuciones
+Las contribuciones NO son bienvenidas es un proyecto escolar.
+1. No hagas fork del repositorio
+2. No crees una nueva rama
+3. No envies un pull request
 
-### 6. 3. Ejecuta `mvn spring-boot:run`
-
-En tu navegador dirigite a http://localhost:8080/ 
-
-Note: Por el momento Funcionando operaciones *CRUD* en tablas *Categories, Images, Proveedores, Phones, Emails* y Funcionando sin todas las operacion *CRUD* *Products*
+## 📄 Licencia
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles.
