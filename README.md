@@ -68,8 +68,8 @@ cd tiendaAbarrotes
    app.upload.dir=C:\\springWeb\\
    ```
 
-3. Crea el directorio `springWeb` en la unidad C: (Windows)
-4. Descomprime el archivo `images.zip` en `C:\springWeb\`
+2.3. Crea el directorio `springWeb` en la unidad C: (Windows)  
+2.4. Descomprime el archivo `images.zip` en `C:\springWeb\`  
 
 ### 3. Configuración de la Base de Datos   
 3.1. En `application.properties`, configura los datos de conexión:
@@ -84,10 +84,10 @@ cd tiendaAbarrotes
 ### 4. Inicialización de la Base de Datos
 Tienes dos opciones:
 #### Opción A: Ejecución Manual
-4.1. Localiza los archivos en `src/main/resources/`:
-    - `schema.sql` (estructura de la base de datos)
-    - `data.sql` (datos de prueba)
-4.2. Ejecuta estos scripts en tu servidor MariaDB
+4.1. Localiza los archivos en `src/main/resources/`:       
+    - `schema.sql` (estructura de la base de datos)       
+    - `data.sql` (datos de prueba)      
+4.2. Ejecuta estos scripts en tu servidor MariaDB     
 
 #### Opción B: Ejecución Automatizada
 4.1. Ejecuta `PVIFranciscoLopezApplicationTests` ubicado en `src/test/java/mx/unam/dgtic`   
