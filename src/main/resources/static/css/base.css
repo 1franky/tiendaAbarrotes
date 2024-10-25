@@ -1,0 +1,25 @@
+/*.navbar {*/
+/*    position: fixed;*/
+/*    !*top: 0;*!*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    z-index: 1000;*/
+/*}*/
+/*.navbar-content {*/
+/*    !*max-width: 1320px;*!*/
+/*    !*margin: 0 auto;*!*/
+/*    padding-left: 15px;*/
+/*    padding-right: 15px;*/
+/*}*/
+/*body {*/
+/*    !*padding-top: 56px; *!*/
+/*}*/
+
+.hover-text{
+
+}
+
+.hover-text:hover {
+    color: orange;
+    background: white;
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{plantillas/base :: head}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+<header th:replace="~{plantillas/base :: header}"></header>
+
+<div th:if="${errorModal != null}" id="errorModal"></div>
+<main class="container text-center opacity-75 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <div class="container ">
+        <h1 class="" th:text="${contenido}"></h1>
+    </div>
+
+    <div class="container mt-5">
+        <div class="card shadow-lg border-0">
+            <div class="row g-0">
+                <!-- Imagen -->
+                <div class="col-md-3">
+                    <div class="img-fluid rounded-start" th:if="${prov.image != null}">
+                        <img th:src="@{'/imagenes/'+${prov.image.pathImage}}" class="img-fluid rounded-start" alt="Imagen del producto">
+                    </div>
+                    <div class="img-fluid rounded-start" th:if="${prov.image == null}">
+                        <img th:src="@{'/imagenes/'+${imgDefault}}" class="img-fluid rounded-start" alt="Imagen del producto">
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <!-- Título del producto -->
+                        <h2 class="card-title fw-bold mb-0" th:text="${prov.name}"></h2>
+                        <span class="badge" th:classappend="${prov.activo ? 'bg-success' : 'bg-danger'}">
+                            <i class="fas" th:classappend="${prov.activo ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                            <span th:text="${prov.activo ? 'Activo' : 'Inactivo'}"></span>
+                        </span>
+                        <br>
+                        <br>
+
+                        <!-- Detalles del producto -->
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <p class="mb-1"><strong>UUID:</strong> <span th:text="${prov.id}"></span></p>
+                                <p class="mb-1"><strong>Creado:</strong>
+                                    <span th:text="${#temporals.format(prov.createdAt, 'dd MMM yyyy HH:mm')}"></span>
+                                </p>
+                                <p class="mb-1"><strong>Actualizado:</strong>
+                                    <span th:text="${#temporals.format(prov.updatedAt, 'dd MMM yyyy HH:mm')}"></span>
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <p class="mb-1"><strong>Existencia:</strong> <span th:text="${prov.existencia}"></span></p>
+                                <p class="mb-1"><strong>Precio Venta:</strong>
+                                    $<span th:text="${prov.precioVenta}"></span>
+                                </p>
+                                <p class="mb-1"><strong>Precio Proveedor:</strong>
+                                    $<span th:text="${prov.precioProveedor}"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Descripción -->
+                        <p class="mb-3"><strong>Descripción:</strong> <br>
+                            <span th:text="${prov.description}"></span>
+                        </p>
+
+                        <!-- Información adicional -->
+                        <div class="row">
+                            <div class="col-md-6" th:if="${prov.proveedor != null}">
+                                <p class="mb-1"><strong>Proveedor:</strong>
+                                    <span th:text="${prov.proveedor.name}"></span>
+                                </p>
+                            </div>
+                            <div class="col-md-6" th:if="${prov.category != null}">
+                                <p class="mb-1"><strong>Categoría:</strong>
+                                    <span th:text="${prov.category.name}"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a th:href="@{/product/edit/{id}(id=${prov.id})}" class="btn btn-warning disabled">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <button type="button" class="btn btn-danger" th:attr="data-id=${prov.id}"
+                                    data-bs-toggle="modal" data-bs-target="#modaEliminar"
+                                    onclick="setModaId(this.getAttribute('data-id'))">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                            <a th:href="@{/product/}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Regresar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--    <div class="container mt-4">-->
+<!--        <div class="card">-->
+<!--            <div class="row g-0">-->
+<!--                &lt;!&ndash; Imagen &ndash;&gt;-->
+<!--                <div class="col-md-4" th:if="${prov.image != null}">-->
+<!--                    <img th:src="@{'/imagenes/'+${prov.image.pathImage}}" class="img-fluid rounded-start" alt="Imagen del proveedor">-->
+<!--                </div>-->
+<!--                <div class="col-md-4" th:if="${prov.image == null}">-->
+<!--                    <img th:src="@{'/imagenes/'+${imgDefault}}" class="img-fluid rounded-start" alt="Imagen del proveedor">-->
+<!--                </div>-->
+
+<!--                <div class="col-md-8">-->
+<!--                    <div class="card-body">-->
+<!--                        &lt;!&ndash; Información del product &ndash;&gt;-->
+<!--                        <h2 class="card-title" th:text="${prov.name}"></h2>-->
+<!--                        <p class="card-text">-->
+<!--                            <strong>UUID:</strong> <span th:text="${prov.id}"></span><br>-->
+<!--                            <strong>Creado:</strong> <span th:text="${#temporals.format(prov.createdAt, 'dd MMMM yyyy HH:mm')}"></span><br>-->
+<!--                            <strong>Actualizado:</strong> <span th:text="${#temporals.format(prov.updatedAt, 'dd MMMM yyyy HH:mm')}"></span><br>-->
+<!--                            <strong>Descripción:</strong> <span th:text="${prov.description}"></span><br>-->
+<!--                            <strong>Precio Venta:</strong> <span th:text="${prov.precioVenta}"></span><br>-->
+<!--                            <strong>Precio Proveedor:</strong> <span th:text="${prov.precioProveedor}"></span><br>-->
+<!--                            <strong>Existencia:</strong> <span th:text="${prov.existencia}"></span><br>-->
+<!--                            <strong>Activo:</strong> <span th:text="${prov.activo ? 'Activo' : 'Inactivo'}"></span><br>-->
+<!--                        </p>-->
+
+<!--                        &lt;!&ndash; Información del proveedor &ndash;&gt;-->
+<!--                        <p class="card-text" th:if="${prov.proveedor != null}">-->
+<!--                            <strong>Proveedor:</strong> <span th:text="${prov.proveedor.name}"></span><br>-->
+<!--                        </p>-->
+
+<!--                        &lt;!&ndash; Información de la categoria &ndash;&gt;-->
+<!--                        <p class="card-text" th:if="${prov.category != null}">-->
+<!--                            <strong>Categoría:</strong> <span th:text="${prov.category.name}"></span><br>-->
+<!--                        </p>-->
+
+<!--                        &lt;!&ndash; Botones &ndash;&gt;-->
+<!--                        <div class="d-flex justify-content-between mt-4">-->
+<!--                            <a th:href="@{/product/edit/{id}(id=${prov.id})}" class="btn btn-warning disabled">Editar</a>-->
+<!--                            <button type="button" class="btn btn-danger" th:attr="data-id=${prov.id}"-->
+<!--                                    data-bs-toggle="modal" data-bs-target="#modaEliminar"-->
+<!--                                    onclick="setModaId(this.getAttribute('data-id'))">-->
+<!--                                Eliminar <i class="fas fa-trash-alt" aria-hidden="true"></i>-->
+<!--                            </button>-->
+<!--                            <a th:href="@{/product/}" class="btn btn-secondary">Regresar</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+
+
+
+
+
+</main>
+
+
+
+<div th:fragment="modalEliminar" class="modal" tabindex="-1" id="modaEliminar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">¿Estás seguro?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Seguro que deseas eliminar el Producto?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger" onclick="confirmarEliminar()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer th:replace="~{plantillas/base :: footer}"></footer>
+
+<script type="text/javascript">
+
+
+    let idToDelete;
+    function setModaId(id) {
+        idToDelete = id;
+    }
+    function confirmarEliminar() {
+        if (idToDelete) {
+            window.location.href = `/product/eliminar/${idToDelete}`;
+        } else {
+            console.error('No se ha establecido el ID de la categoría a eliminar');
+        }
+    }
+</script>
+
+
+</body>
+</html>

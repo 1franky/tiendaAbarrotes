@@ -1,0 +1,155 @@
+/*
+* DEFIICION DE LA BASE DE DATOS DEL PROYECTO
+* Francisco Miztli López Salinas
+* ************************
+* AUN NO ES LA DIFINICION FINAL AUN ESTOY CONSIDERANDO VARIAS MODIFICACIONES
+*/
+
+
+DROP DATABASE IF EXISTS pvi;
+
+CREATE DATABASE IF NOT EXISTS pvi;
+USE pvi;
+
+CREATE TABLE `Proveedores` (
+        `id` varchar(40) PRIMARY KEY,
+        `created_at` datetime NOT NULL,
+        `updated_at` datetime NOT NULL,
+        `name` varchar(255) NOT NULL,
+        `address` varchar(255) NOT NULL,
+        `activo` bool NOT NULL,
+        `image_id` varchar(40),
+        `category_id` varchar(40)
+);
+
+CREATE TABLE `Phones` (
+        `id` varchar(40) PRIMARY KEY,
+        `created_at` datetime NOT NULL,
+        `updated_at` datetime NOT NULL,
+        `phone` varchar(15) NOT NULL,
+        `descripcion` varchar(255),
+        `provedor_id` varchar(40)
+);
+
+CREATE TABLE `Emails` (
+        `id` varchar(40) PRIMARY KEY,
+        `created_at` datetime NOT NULL,
+        `updated_at` datetime NOT NULL,
+        `email` varchar(255) UNIQUE,
+        `descripcion` varchar(255),
+        `provedor_id` varchar(40)
+);
+
+CREATE TABLE `Images` (
+        `id` varchar(40) PRIMARY KEY,
+        `created_at` datetime NOT NULL,
+        `updated_at` datetime NOT NULL,
+        `pathImage` varchar(255)
+);
+
+CREATE TABLE `Products` (
+        `id` varchar(40) PRIMARY KEY,
+        `created_at` datetime NOT NULL,
+        `updated_at` datetime NOT NULL,
+        `name` varchar(255) NOT NULL,
+        `descripcion` varchar(255) NOT NULL,
+        `precioVenta` float,
+        `precioProvedor` float,
+        `existencia` integer,
+        `activo` bool,
+        `provedor_id` varchar(40),
+        `image_id` varchar(40),
+        CHECK(precioVenta > 0),
+        CHECK(precioVenta > precioProvedor),
+        CHECK(precioProvedor > 0),
+        CHECK(existencia > 0)
+);
+
+CREATE TABLE `Categories` (
+        `id` varchar(40) PRIMARY KEY,
+        `created_at` datetime NOT NULL,
+        `updated_at` datetime NOT NULL,
+        `name` varchar(255) NOT NULL,
+        `producto_id` varchar(40)
+);
+
+CREATE TABLE `Clients` (
+        `id` varchar(40) PRIMARY KEY,
+        `created_at` datetime NOT NULL,
+        `updated_at` datetime NOT NULL,
+        `name` varchar(100) NOT NULL,
+        `email` varchar(50) NOT NULL UNIQUE,
+        `password` varchar(255) -- Password encriptado
+);
+
+CREATE TABLE `Products_Tickets` (
+        `id` integer PRIMARY KEY AUTO_INCREMENT,
+        `product_id` varchar(40),
+        `ticcket_id` varchar(40),
+        `precioVenta` float, -- Se guarda el precio de venta aqui para que al momento de actualizar el precio de un producto no se modifuque el precio del ticket
+        CHECK(precioVenta > 0)
+);
+
+CREATE TABLE `Tickets` (
+        `id` varchar(40) PRIMARY KEY,
+        `created_at` datetime NOT NULL,
+        `updated_at` datetime NOT NULL,
+        `fecha` datetime NOT NULL,
+        `cliente_id` varchar(40),
+        `total` float,
+        CHECK(total > 0)
+);
+
+CREATE TABLE `users` (
+        `id` varchar(40) PRIMARY KEY,
+        `name` varchar(100)  NOT NULL,
+        `tipoUser` integer NOT NULL,
+        `password` varchar(255)  -- Password encriptado
+);
+
+ALTER TABLE `Provedores` ADD FOREIGN KEY (`image_id`) REFERENCES `Images` (`id`);
+ALTER TABLE `Provedores` ADD FOREIGN KEY (`category_id`) REFERENCES `Categories` (`id`);
+ALTER TABLE `Phones` ADD FOREIGN KEY (`provedor_id`) REFERENCES `Provedores` (`id`);
+ALTER TABLE `Emails` ADD FOREIGN KEY (`provedor_id`) REFERENCES `Provedores` (`id`);
+ALTER TABLE `Products` ADD FOREIGN KEY (`provedor_id`) REFERENCES `Provedores` (`id`);
+ALTER TABLE `Products` ADD FOREIGN KEY (`image_id`) REFERENCES `Images` (`id`);
+ALTER TABLE `Categories` ADD FOREIGN KEY (`producto_id`) REFERENCES `Products` (`id`);
+ALTER TABLE `Products_Tickets` ADD FOREIGN KEY (`product_id`) REFERENCES `Products` (`id`);
+ALTER TABLE `Products_Tickets` ADD FOREIGN KEY (`ticcket_id`) REFERENCES `Tickets` (`id`);
+ALTER TABLE `Tickets` ADD FOREIGN KEY (`cliente_id`) REFERENCES `Clients` (`id`);
+
+
+-- Índices para la tabla Provedores
+CREATE INDEX idx_provedores_name ON Provedores(name);
+CREATE INDEX idx_provedores_activo ON Provedores(activo);
+CREATE INDEX idx_provedores_categorie ON Provedores(category_id);
+
+-- Índices para la tabla Phones
+CREATE INDEX idx_phones_provedor_id ON Phones(provedor_id);
+
+-- Índices para la tabla Emails
+CREATE INDEX idx_emails_provedor_id ON Emails(provedor_id);
+
+-- Índices para la tabla Products
+CREATE INDEX idx_products_name ON Products(name);
+CREATE INDEX idx_products_provedor_id ON Products(provedor_id);
+CREATE INDEX idx_products_activo ON Products(activo);
+
+-- Índices para la tabla Categories
+CREATE INDEX idx_categories_name ON Categories(name);
+CREATE INDEX idx_categories_producto_id ON Categories(producto_id);
+
+-- Índices para la tabla Clients
+CREATE INDEX idx_clients_name ON Clients(name);
+
+-- Índices para la tabla Products_Tickets
+CREATE INDEX idx_products_tickets_product_id ON Products_Tickets(product_id);
+CREATE INDEX idx_products_tickets_ticket_id ON Products_Tickets(ticcket_id);
+
+-- Índices para la tabla Tickets
+CREATE INDEX idx_tickets_fecha ON Tickets(fecha);
+CREATE INDEX idx_tickets_cliente_id ON Tickets(cliente_id);
+
+-- Índices para la tabla users
+CREATE INDEX idx_users_name ON users(name);
+CREATE INDEX idx_users_tipoUser ON users(tipoUser);

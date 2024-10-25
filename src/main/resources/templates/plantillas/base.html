@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Spring</title>
+
+    <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/jquery-ui.min.css}" rel="stylesheet">
+<!--    <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet">-->
+<!--    <link th:href="@{/css/style.css}" rel="stylesheet">-->
+    <link th:href="@{/css/base.css}" rel="stylesheet">
+</head>
+<body>
+
+<header th:fragment="header" class="navbar navbar-expand-lg navbar-dark bd-navbar bg-dark sticky-top" role="banner">
+    <nav class="container-xxl bd-gutter flex-wrap flex-lg-nowrap bg-dark">
+        <div class="container">
+<!--            <a class="navbar-brand" th:href="@{/}">Home</a>-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-around align-content-around" id="navbarSupportedContent">
+
+<!--                MENU-->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-content-start">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                    </li>
+
+                </ul>
+
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-content-end justify-content-end">
+<!--                    categorias-->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/category/}">Categorias</a>
+                    </li>
+<!--                    proveedor-->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/proveedor/}">Proveedores</a>
+                    </li>
+<!--                    products-->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/product/}">Products</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle disabled" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            nothing here yet
+                        </a>
+                        <ul class="dropdown-menu ">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Disabled</a>
+                    </li>
+                    <li class="nav-item dropdown disabled">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            notig here
+                        </a>
+                        <ul class="dropdown-menu bg-dark ">
+                            <li><a class="dropdown-item text-white hover-text" href="#">Action</a></li>
+                            <li><a class="dropdown-item text-white" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-white" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+
+
+<!--                    cerrar sesion-->
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light" href="#">Cerrar Sesión</a>
+                    </li>
+                </ul>
+
+<!--                <form class="d-flex" role="search">-->
+<!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--                    <button class="btn btn-outline-success" type="submit">Search</button>-->
+<!--                </form>-->
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="alert alert-success" th:if="${success !=null}" th:text=${success}></div>
+    <div class="alert alert-danger" th:if="${error !=null}" th:text=${error}></div>
+    <div class="alert alert-warning" th:if="${warning !=null}" th:text=${warning}></div>
+    <div class="alert alert-info" th:if="${info !=null}" th:text=${info}></div>
+</header>
+
+
+<footer th:fragment="footer">
+    <div class="container text-center">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="alert alert-danger" role="alert">
+            <h4>Dirección General de Cómputo y de Tecnologias de información y Comunicación.</h4>
+            <h5>Francisco Miztli López Salinas</h5>
+            <h6>© Copyright 2024 Todos los derechos reservados. </h6>
+            <h5></h5>
+        </div>
+        <p>
+
+        </p>
+    </div>
+    <script th:src="@{/bootstrap/js/jquery-3.6.3.js}"></script>
+    <script th:src="@{/bootstrap/js/jquery-ui.min.js}"></script>
+    <script th:src="@{/bootstrap/js/popper.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</footer>
+
+
+</body>
+</html>
