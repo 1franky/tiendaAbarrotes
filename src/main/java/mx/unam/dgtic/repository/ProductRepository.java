@@ -20,11 +20,11 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     List<Product> findByProveedor_NameOrderByPrecioVentaDesc(String proveedorName);
     List<Product> findByExistenciaLessThan(Integer existencia);
 
-    @Query(name = "Product.findByPriceRange")
-    List<Product> findByPriceRange(Float minPrice, Float maxPrice);
-
-    @Query(name = "Product.findActiveByCategory")
-    List<Product> findActiveByCategory(String categoryName);
+//    @Query(name = "Product.findByPriceRange")
+//    List<Product> findByPriceRange(Float minPrice, Float maxPrice);
+//
+//    @Query(name = "Product.findActiveByCategory")
+//    List<Product> findActiveByCategory(String categoryName);
 
 
 

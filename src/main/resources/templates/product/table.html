@@ -122,7 +122,9 @@
                              data-precioVenta=${prod.precioVenta},
                              data-precioProveedor=${prod.precioProveedor},
                              data-existencia=${prod.existencia},
-                             data-activo=${prod.activo}">
+                             data-activo=${prod.activo},
+                             data-category=${prod.category != null ? prod.category.id : 'N/A'},
+                             data-proveedor=${prod.proveedor != null ? prod.proveedor.id : 'N/A'}">
                 Modificar <i class="fas fa-pen-nib" aria-hidden="true"></i>
             </button>
 
@@ -139,73 +141,119 @@
 </table>
 
 
+
+
+
+
+
 <!--modal editar y crear-->
 <div th:fragment="modalCrear" class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="modalCrearLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalCrearLabel">Producto</h5>
+                <h5 class="modal-title" id="modalCrearLabel1">Producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form th:action="@{/product/}" th:method="post" >
 
                 <div class="modal-body">
-                    <h5><marquee> Aun en construccion </marquee> </h5>
                     <input type="hidden" name="id" id="modalId" >
                     <input type="hidden" name="createdAt" id="modalCreatedAt" >
                     <input type="hidden" name="updatedAt" id="modalUpdatedAt" >
 
-<!--                    <div class="mb-3">-->
-<!--                        <label for="modalName" class="form-label">Nombre</label>-->
-<!--                        <input type="text" class="form-control" id="modalName" name="name" placeholder="Nombre del proveedor."-->
-<!--                               th:value="${product.name}" required>-->
-<!--                        <div class="alert alert-danger" th:if="${nameError != null}" id="nameError">-->
-<!--                            <small th:text="${nameError}"></small>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="mb-3">
+                        <label for="modalName" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="modalName" name="name" placeholder="Nombre del product."
+                               th:value="${product.name}" required>
+                        <div class="alert alert-danger" th:if="${nameError != null}" id="nameError">
+                            <small th:text="${nameError}"></small>
+                        </div>
+                    </div>
 
-<!--                    <div class="mb-3">-->
-<!--                        <label for="modalAddress" class="form-label">Dirección</label>-->
-<!--                        <input type="text" class="form-control" id="modalAddress" name="address" placeholder="Dirrecion del proveedor."-->
-<!--                               th:value="${product.address}" required>-->
-<!--                        <div class="alert alert-danger" th:if="${addressError != null}" id="addressError">-->
-<!--                            <small th:text="${addressError}"></small>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="mb-3">
+                        <label for="modalDescription" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="modalDescription" name="description" placeholder="Descripción del product."
+                               th:value="${product.description}" required>
+                        <div class="alert alert-danger" th:if="${descriptionError != null}" id="descriptionError">
+                            <small th:text="${descriptionError}"></small>
+                        </div>
+                    </div>
 
-<!--&lt;!&ndash;                    radio button activo&ndash;&gt;-->
-<!--                    <div class="mb-3">-->
-<!--                        <div class="form-check">-->
-<!--                            <input class="form-check-input" type="radio" id="activoTrue" th:value="true" name="activo">-->
-<!--                            <label class="form-check-label" for="activoTrue">-->
-<!--                                Activo-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                        <div class="form-check">-->
-<!--                            <input class="form-check-input" type="radio" id="activoFalse" th:value="false" name="activo" checked>-->
-<!--                            <label class="form-check-label" for="activoFalse">-->
-<!--                                Inactivo-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="mb-3">
+                        <label for="modalPrecioVenta" class="form-label">Precio de Venta</label>
+                        <input type="text" class="form-control" id="modalPrecioVenta" name="precioVenta" placeholder="15.99"
+                               th:value="${product.precioVenta}" required>
+                        <div class="alert alert-danger" th:if="${precioVentaError != null}" id="precioVentaError">
+                            <small th:text="${precioVentaError}"></small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modalPrecioProveedor" class="form-label">Precio del proveedor</label>
+                        <input type="text" class="form-control" id="modalPrecioProveedor" name="precioProveedor" placeholder="15.99"
+                               th:value="${product.precioProveedor}" required>
+                        <div class="alert alert-danger" th:if="${precioProveedorError != null}" id="precioProveedorError">
+                            <small th:text="${precioProveedorError}"></small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modalExistencia" class="form-label">Existencia</label>
+                        <input type="number" class="form-control" id="modalExistencia" name="existencia" placeholder="15"
+                               th:value="${product.existencia}" required>
+                        <div class="alert alert-danger" th:if="${existenciaError != null}" id="existenciaError">
+                            <small th:text="${existenciaError}"></small>
+                        </div>
+                    </div>
+
+
+
+<!--                    radio button activo-->
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="activoTrue" th:value="true" name="activo">
+                            <label class="form-check-label" for="activoTrue">
+                                Activo
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="activoFalse" th:value="false" name="activo" checked>
+                            <label class="form-check-label" for="activoFalse">
+                                Inactivo
+                            </label>
+                        </div>
+                    </div>
 
 <!--                    list category-->
-<!--                    <div class="mb-3">-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="category">Categoría</label>-->
-<!--                            <select class="form-control" id="category" name="category">-->
-<!--                                <option th:each="sel : ${selectCategory}"-->
-<!--                                        th:value="${sel.id}"-->
-<!--                                        th:text="${sel.name}">-->
-<!--                                </option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="category">Categoría</label>
+                            <select class="form-control" id="category" name="category">
+                                <option th:each="sel : ${selectCategory}"
+                                        th:value="${sel.id}"
+                                        th:text="${sel.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
 
-
+                    <!--  list proveedor-->
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="proveedor">Proveedor</label>
+                            <select class="form-control" id="proveedor" name="proveedor">
+                                <option th:each="selPro : ${selectProveedor}"
+                                        th:value="${selPro.id}"
+                                        th:text="${selPro.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
 
 
                 </div>
+
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -248,21 +296,30 @@
         const createdAt = button.getAttribute('data-created');
         const updatedAt = button.getAttribute('data-updated');
         const name = button.getAttribute('data-name');
-        const address = button.getAttribute('data-address');
+        const description = button.getAttribute('data-description');
+        const precioVenta = button.getAttribute('data-precioVenta');
+        const precioProveedor = button.getAttribute('data-precioProveedor');
+        const existencia = button.getAttribute('data-existencia');
         const activo = button.getAttribute('data-activo');
         const category = button.getAttribute('data-category');
+        const proveedor = button.getAttribute('data-proveedor');
 
         let findCategory = false;
+        let findProveedor = false;
 
         // Referencias a los campos del formulario
         const inputId = modalCrear.querySelector('#modalId');
         const inputCreatedAt = modalCrear.querySelector('#modalCreatedAt');
         const inputUpdatedAt = modalCrear.querySelector('#modalUpdatedAt');
         const inputName = modalCrear.querySelector('#modalName');
-        const inputAddress = modalCrear.querySelector('#modalAddress');
+        const inputDescription = modalCrear.querySelector('#modalDescription');
+        const inputPrecioVenta = modalCrear.querySelector('#modalPrecioVenta');
+        const inputPrecioProveedor = modalCrear.querySelector('#modalPrecioProveedor');
+        const inputExistencia = modalCrear.querySelector('#modalExistencia');
         const inputActiveTrue = modalCrear.querySelector('#activoTrue');
         const inputActiveFalse = modalCrear.querySelector('#activoFalse');
         const inputCategory = modalCrear.querySelector('#category');
+        const inputProveedor = modalCrear.querySelector('#proveedor');
 
         if (id) {
             // Precargar datos para modificar
@@ -270,7 +327,10 @@
             inputCreatedAt.value = createdAt;
             inputUpdatedAt.value = updatedAt;
             inputName.value = name;
-            inputAddress.value = address;
+            inputDescription.value = description;
+            inputPrecioVenta.value = precioVenta;
+            inputPrecioProveedor.value = precioProveedor;
+            inputExistencia.value = existencia;
 
             if (activo.toString() === 'true') {
                 inputActiveTrue.checked = true;
@@ -291,16 +351,31 @@
                 inputCategory.selectedIndex = 0;
             }
 
+            for (let itemSelect of inputProveedor.options){
+                if (itemSelect.value === proveedor){
+                    itemSelect.selected = true;
+                    findProveedor = true;
+                    break;
+                }
+            }
+            if (findProveedor === false){
+                inputProveedor.selectedIndex = 0;
+            }
+
         } else {
             // Limpiar los campos para crear nueva proveedor
             inputId.value = '';
             inputCreatedAt.value = '';
             inputUpdatedAt.value = '';
             inputName.value = '';
-            inputAddress.value = '';
+            inputDescription.value = '';
             inputActiveTrue.checked = true;
             inputActiveFalse.checked = false;
             inputCategory.selectedIndex = 0;
+            inputProveedor.selectedIndex = 0;
+            inputPrecioVenta.value = '';
+            inputPrecioProveedor.value = '';
+            inputExistencia.value = '';
         }
     });
 
@@ -318,7 +393,6 @@
     }
 
 
-
     //aqui el modal abierto
     window.addEventListener('load', function () {
         const error = document.getElementById('errorModal');
@@ -333,15 +407,16 @@
     document.addEventListener('DOMContentLoaded', function() {
         const modal = document.getElementById('modalCrear');
         const errorMessageDiv1 = document.getElementById('nameError');
-        const errorMessageDiv2 = document.getElementById('addressError');
+        const errorMessageDiv2 = document.getElementById('descriptionError');
+        const errorMessageDiv3 = document.getElementById('precioVentaError');
+        const errorMessageDiv4 = document.getElementById('precioProveedorError');
+        const errorMessageDiv5 = document.getElementById('existenciaError');
+
+        const arregloErrores = [errorMessageDiv1, errorMessageDiv2, errorMessageDiv3, errorMessageDiv4, errorMessageDiv5];
 
         modal.addEventListener('hidden.bs.modal', function () {
-            if (errorMessageDiv1) {
-                errorMessageDiv1.style.display = 'none';
-            }
-            if (errorMessageDiv2) {
-
-                errorMessageDiv2.style.display = 'none';
+            for (let errorMessage of arregloErrores){
+                errorMessage.style.display = 'none';
             }
         });
     });

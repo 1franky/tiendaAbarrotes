@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -85,8 +86,7 @@ public abstract class BaseController<T> {
     @PostMapping("/")
     public String saveEntity(@Valid @ModelAttribute("entity") T entity,
                              BindingResult result,
-                             RedirectAttributes flash,
-                             SessionStatus session) {
+                             RedirectAttributes flash) {
         log.info("guardar: {}", entity);
         flash.addFlashAttribute(getEntityName(), entity);
         if (result.hasErrors()) {
@@ -95,10 +95,11 @@ public abstract class BaseController<T> {
         }
 
         try {
+            log.info("guardar: {}", entity);
             getService().save(entity);
-//            session.setComplete();
             flash.addFlashAttribute("success", getEntityName() + " guardado con éxito");
         } catch (Exception e) {
+            log.error("Error al guardar: {}", e.getMessage());
             errorsSave(flash, entity, e);
         }
         return "redirect:/" + getEntityName() + "/";
@@ -131,6 +132,7 @@ public abstract class BaseController<T> {
         result.getFieldErrors().forEach(error -> {
             String fieldNameError = error.getField() + "Error";
             flash.addFlashAttribute(fieldNameError, error.getDefaultMessage());
+//            log.error("Campo: {} -> error: {}", fieldNameError, error.getDefaultMessage());
         });
         flash.addFlashAttribute(getEntityName(), entity);
     }

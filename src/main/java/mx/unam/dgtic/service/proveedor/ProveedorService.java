@@ -5,6 +5,8 @@ import mx.unam.dgtic.entity.Proveedor;
 import mx.unam.dgtic.service.BaseService;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @author FRANCISCO MIZTLI LOPEZ SALINAS
  * @user franciscolopez
@@ -14,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
  */
 
 public interface ProveedorService extends BaseService<Proveedor> {
+
+    List<Proveedor> getProveedores();
 
     Boolean updateFull(Proveedor proveedor, MultipartFile imageFile);
 
