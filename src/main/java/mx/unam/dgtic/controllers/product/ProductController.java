@@ -3,9 +3,13 @@ package mx.unam.dgtic.controllers.product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mx.unam.dgtic.controllers.BaseController;
+import mx.unam.dgtic.entity.Category;
 import mx.unam.dgtic.entity.Product;
+import mx.unam.dgtic.entity.Proveedor;
 import mx.unam.dgtic.service.BaseService;
+import mx.unam.dgtic.service.category.CategoryService;
 import mx.unam.dgtic.service.product.ProductService;
+import mx.unam.dgtic.service.proveedor.ProveedorService;
 import mx.unam.dgtic.utils.RenderPagina;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -14,11 +18,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +45,9 @@ public class ProductController extends BaseController<Product> {
 
     private final ProductService productService;
 
+    private final CategoryService categoryService;
+
+    private final ProveedorService proveedorService;
 
     @Value("${app.upload.dir}")
     private String UPLOAD_DIR;
@@ -59,7 +69,19 @@ public class ProductController extends BaseController<Product> {
 
     @Override
     protected Map<String, List<Object>> getSelects() {
-        return Map.of();
+        Map<String, List<Object>> select = new HashMap<>();
+        select.put("selectProveedor", new ArrayList<>());
+        select.put("selectCategory", new ArrayList<>());
+
+        categoryService.getCategories().forEach(category -> {
+            select.get("selectCategory").add(category);
+        });
+
+        proveedorService.getProveedores().forEach(proveedor -> {
+            select.get("selectProveedor").add(proveedor);
+        });
+
+        return select;
     }
 
     @GetMapping("proveedor/{id}")
@@ -96,10 +118,10 @@ public class ProductController extends BaseController<Product> {
         String url = "/product/proveedor/" + id;
         RenderPagina<Product> renderPagina = new RenderPagina<>(url, products, size);
 
-        model.addAttribute(getViewName(), products);
         model.addAttribute(getEntityName(), product);
-        model.addAttribute("page", renderPagina);
         model.addAttribute("contenido", getEntityName() + "s");
+        model.addAttribute("page", renderPagina);
+        model.addAttribute(getViewName(), products);
         model.addAttribute("search", search);
         model.addAttribute("sort", sort);
         model.addAttribute("direction", direction);
@@ -117,7 +139,6 @@ public class ProductController extends BaseController<Product> {
             log.warn("Producto con id {} no tiene imagen se usara default", id);
             model.addAttribute("imgDefault", "/images/default2.jpg");
         }
-        log.info("image product {}", product.getImage().getPathImage());
         model.addAttribute("prov", product);
         return getEntityName() + "/cardDetails";
     }

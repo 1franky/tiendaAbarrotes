@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author FRANCISCO MIZTLI LOPEZ SALINAS
@@ -44,6 +46,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void save(Product entity) throws Exception {
+        log.info("Save Product {}", entity);
+        if (entity.getId() == null || entity.getId().isBlank()) {
+            entity.setId(UUID.randomUUID().toString());
+            entity.setCreatedAt(Instant.now());
+        }
+
+        entity.setUpdatedAt(Instant.now());
         productRepository.save(entity);
     }
 

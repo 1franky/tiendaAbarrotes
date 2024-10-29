@@ -115,6 +115,11 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
+    public List<Proveedor> getProveedores() {
+        return proveedorRepository.findAll();
+    }
+
+    @Override
     @Transactional()
     public Boolean updateFull(Proveedor proveedor, MultipartFile imageFile) {
         try {
