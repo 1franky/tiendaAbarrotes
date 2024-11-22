@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="es">
 <head th:fragment="head">
     <meta charset="UTF-8">
     <title>Spring</title>
@@ -23,24 +23,24 @@
             <div class="collapse navbar-collapse justify-content-around align-content-around" id="navbarSupportedContent">
 
 <!--                MENU-->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-content-start">
+                <ul class="navbar-nav me-auto mb-3 mb-lg-0 align-content-between">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                     </li>
 
                 </ul>
 
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-content-end justify-content-end">
+                <ul class="navbar-nav me-auto mb-6 mb-lg-0 align-content-end align-content-between">
 <!--                    categorias-->
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/category/}">Categorias</a>
                     </li>
 <!--                    proveedor-->
-                    <li class="nav-item">
+                    <li sec:authorize="hasRole('ADMIN')" class="nav-item">
                         <a class="nav-link" th:href="@{/proveedor/}">Proveedores</a>
                     </li>
 <!--                    products-->
-                    <li class="nav-item">
+                    <li sec:authorize="hasRole('USER')" class="nav-item">
                         <a class="nav-link" th:href="@{/product/}">Products</a>
                     </li>
                     <li class="nav-item dropdown">
@@ -69,13 +69,21 @@
                         </ul>
                     </li>
 
-
-<!--                    cerrar sesion-->
-                    <li class="nav-item">
-                        <a class="btn btn-outline-light" href="#">Cerrar Sesión</a>
-                    </li>
                 </ul>
 
+
+                <ul class="navbar-nav me-auto mb-3 mb-lg-0 align-content-end align-content-between">
+                    <li sec:authorize="!isAuthenticated()" class="nav-item">
+                        <a class="btn btn-outline-light" href="/login">Login</a>
+                    </li>
+                    <!--                    cerrar sesion-->
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <form class="link" th:action="@{/doLogout}" method="post">
+                            <input class="btn btn-outline-light" type="submit" value="Cerrar Sesión"/>
+                        </form>
+                        <!--                        <a class="btn btn-outline-light" href="#">Cerrar Sesión</a>-->
+                    </li>
+                </ul>
 <!--                <form class="d-flex" role="search">-->
 <!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
 <!--                    <button class="btn btn-outline-success" type="submit">Search</button>-->
