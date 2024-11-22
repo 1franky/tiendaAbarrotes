@@ -6,6 +6,10 @@ spring:
     username: root
     password: Francisco31.
     driver-class-name: org.mariadb.jdbc.Driver
+  security:
+    user:
+      name: admin
+      password: admin123
   servlet:
     multipart:
       max-file-size: 5MB
