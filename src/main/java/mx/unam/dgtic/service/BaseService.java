@@ -15,7 +15,7 @@ public interface BaseService<T> {
     Page<T> findAll(Pageable pageable);
     Page<T> searchByAllColumns(String search, Pageable pageable);
     T findById(String id);
-    void save(T entity)  throws Exception;
+    T save(T entity)  throws Exception;
     void delete(String id)  throws Exception;
     T getEmpty();
 }

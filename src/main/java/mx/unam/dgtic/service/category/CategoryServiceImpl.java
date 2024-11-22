@@ -1,5 +1,6 @@
 package mx.unam.dgtic.service.category;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mx.unam.dgtic.entity.Category;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -48,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public void save(Category category) throws Exception {
+    public Category save(Category category) throws Exception {
         if (category.getId() == null || category.getId().isBlank() ) {
             category.setId(UUID.randomUUID().toString());
             category.setCreatedAt(Instant.now());
@@ -59,12 +61,23 @@ public class CategoryServiceImpl implements CategoryService {
         }
         category.setUpdatedAt(Instant.now());
         categoryRepository.save(category);
+        return category;
     }
 
     @Override
     @Transactional
     public void delete(String id)  throws Exception {
-        categoryRepository.deleteById(id);
+        categoryRepository.findById(id).ifPresentOrElse(categoryRepository::delete,
+                () -> {
+                    throw new EntityNotFoundException("No existe Category con id: " + id);
+                }
+        );
+        Optional<Category> categoryOpt = categoryRepository.findById(id);
+        if (categoryOpt.isPresent()) {
+            categoryRepository.delete(categoryOpt.get());
+            return;
+        }
+        throw new EntityNotFoundException("No existe Category con id: " + id);
     }
 
     @Override
