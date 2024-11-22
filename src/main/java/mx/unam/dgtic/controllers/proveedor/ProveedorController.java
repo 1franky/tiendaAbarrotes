@@ -59,6 +59,16 @@ public class ProveedorController extends BaseController<Proveedor> {
     }
 
     @Override
+    protected Class<Proveedor> getEntityClass() {
+        return Proveedor.class;
+    }
+
+    @Override
+    protected Proveedor cleanObject(Proveedor object) {
+        return object;
+    }
+
+    @Override
     protected Map<String, List<Object>> getSelects(){
         Map<String, List<Object>> select = new HashMap<>();
         select.put("selectCategory", new ArrayList<>());

@@ -10,8 +10,8 @@ import java.util.Optional;
 public interface ClientRepository extends JpaRepository<Client, String> {
     Optional<Client> findByEmail(String email);
 
-    @Query(name = "Proveedor.findActiveByCategory")
-    List<Client> findByNameContain(String name);
+//    @Query(name = "Proveedor.findActiveByCategory")
+//    List<Client> findByNameContain(String name);
 
 
     @Query("SELECT c FROM Client c " +

@@ -44,6 +44,16 @@ public class CategoryController extends BaseController<Category> {
     }
 
     @Override
+    protected Class<Category> getEntityClass() {
+        return Category.class;
+    }
+
+    @Override
+    protected Category cleanObject(Category object) {
+        return object;
+    }
+
+    @Override
     protected Map<String, List<Object>> getSelects() {
         return Map.of();
     }

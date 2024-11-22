@@ -1,5 +1,6 @@
 package mx.unam.dgtic.service.proveedor;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mx.unam.dgtic.entity.*;
@@ -56,13 +57,17 @@ public class ProveedorServiceImpl implements ProveedorService {
     @Override
     @Transactional(readOnly = true)
     public Page<Proveedor> findAll(Pageable pageable) {
-        return proveedorRepository.findAll(pageable);
+        Page<Proveedor> proveedors = proveedorRepository.findAll(pageable);
+        deleteCampos(proveedors);
+        return proveedors;
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<Proveedor> searchByAllColumns(String search, Pageable pageable) {
-        return proveedorRepository.searchByAllColumns(search, pageable);
+        Page<Proveedor> proveedors = proveedorRepository.searchByAllColumns(search, pageable);
+        deleteCampos(proveedors);
+        return proveedors;
     }
 
     @Override
@@ -73,7 +78,7 @@ public class ProveedorServiceImpl implements ProveedorService {
 
     @Override
     @Transactional
-    public void save(Proveedor proveedor) throws Exception {
+    public Proveedor save(Proveedor proveedor) throws Exception {
         if (proveedor.getId() == null || proveedor.getId().isBlank()) {
             proveedor.setId(UUID.randomUUID().toString());
             proveedor.setCreatedAt(Instant.now());
@@ -81,13 +86,14 @@ public class ProveedorServiceImpl implements ProveedorService {
 
         proveedor.setUpdatedAt(Instant.now());
         proveedorRepository.save(proveedor);
+        return proveedor;
     }
 
     @Override
     @Transactional
     public void delete(String id) throws Exception {
         try{
-            proveedorRepository.findById(id).ifPresent(proveedor -> {
+            proveedorRepository.findById(id).ifPresentOrElse(proveedor -> {
                 String imgToDelete = null;
                 if (proveedor.getImage() != null) {
                     imgToDelete = proveedor.getImage().getPathImage();
@@ -101,6 +107,8 @@ public class ProveedorServiceImpl implements ProveedorService {
                 }
                 proveedorRepository.delete(proveedor);
                 deleteImage(imgToDelete);
+            }, () -> {
+                throw new EntityNotFoundException("No existe Proveedor con id: " + id);
             });
         } catch (Exception e){
             log.error("Error al eliminar el proveedor: {}", e.getMessage());
@@ -256,6 +264,12 @@ public class ProveedorServiceImpl implements ProveedorService {
             }
         }catch (IOException e){
             log.error("Error al eliminar el archivo: {} erro -> {}", imageName, e.getMessage());
+        }
+    }
+
+    private void deleteCampos(Page<Proveedor> proveedors) {
+        for (Proveedor proveedor : proveedors.getContent()) {
+            proveedor.setImage(null);
         }
     }
 
