@@ -36,7 +36,7 @@ tiendaAbarrotes/
 │   ├── main/
 │   │   ├── java/
 │   │   ├── resources/
-│   │   │   ├── application.properties
+│   │   │   ├── application.yml
 │   │   │   ├── schema.sql
 │   │   │   └── data.sql
 │   └── test/
@@ -58,27 +58,32 @@ cd tiendaAbarrotes
 ```
 
 ### 2. Configuración del Almacenamiento de Imágenes  
-2.1. Localiza el archivo `application.properties` en `src/main/resources/`  
+2.1. Localiza el archivo `application.yml` en `src/main/resources/`  
 2.2. Configura el directorio de almacenamiento de imágenes:
-   ```properties
-   # Comenta esta línea
-   # app.upload.dir=/Users/franciscolopez/imagesProyectos/springWeb/
-  
-   # Descomenta y usa esta línea para Windows
-   app.upload.dir=C:\\springWeb\\
+   ```yaml
+    app:
+      upload:
+        # Descomenta y usa esta línea para Windows
+        dir: C:\\springWeb\\
+        # Comenta esta línea
+        dir: /Users/franciscolopez/imagesProyectos/springWeb/
    ```
 
 2.3. Crea el directorio `springWeb` en la unidad C: (Windows)  
 2.4. Descomprime el archivo `images.zip` en `C:\springWeb\`  
 
 ### 3. Configuración de la Base de Datos   
-3.1. En `application.properties`, configura los datos de conexión:
+3.1. En `application.yml`, configura los datos de conexión:
 
-   ```properties
-   spring.datasource.url=jdbc:mariadb://localhost:3306/pvi
-   spring.datasource.username=tu_usuario
-   spring.datasource.password=tu_contraseña
-   spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+   ```yaml
+    spring:
+    application:
+      name: PVI_Francisco_Lopez
+    datasource:
+      url: jdbc:mariadb://localhost:3306/pvi
+      username: tu_usuario
+      password: tu_contraseña
+      driver-class-name: org.mariadb.jdbc.Driver
    ```
 
 ### 4. Inicialización de la Base de Datos

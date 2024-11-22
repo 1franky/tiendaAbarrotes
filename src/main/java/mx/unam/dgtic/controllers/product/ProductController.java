@@ -65,6 +65,17 @@ public class ProductController extends BaseController<Product> {
     }
 
     @Override
+    protected Class<Product> getEntityClass() {
+        return Product.class;
+    }
+
+    @Override
+    protected Product cleanObject(Product object) {
+        object.getProveedor().setImage(null);
+        return object;
+    }
+
+    @Override
     protected Map<String, List<Object>> getSelects() {
         Map<String, List<Object>> select = new HashMap<>();
         select.put("selectProveedor", new ArrayList<>());

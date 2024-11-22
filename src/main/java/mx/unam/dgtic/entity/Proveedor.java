@@ -1,6 +1,11 @@
 package mx.unam.dgtic.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -21,14 +26,7 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "Proveedores")
-@NamedQueries({
-        @NamedQuery(
-                name = "Proveedor.findActiveByCategory",
-                query = "SELECT p FROM Proveedor p " +
-                        "WHERE p.activo = true " +
-                        "AND p.category.name = :categoryName"
-        )
-})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Proveedor {
     @Id
     @Column(name = "id", nullable = false, length = 40)
@@ -60,7 +58,7 @@ public class Proveedor {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
-//    @ToString.Exclude
+    @ToString.Exclude
     private Image image;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -96,5 +94,17 @@ public class Proveedor {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.registerModule(new JavaTimeModule());
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error al convertir el objeto Product a JSON " + e.getMessage());
+        }
     }
 }

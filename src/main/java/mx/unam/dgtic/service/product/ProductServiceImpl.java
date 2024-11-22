@@ -1,5 +1,6 @@
 package mx.unam.dgtic.service.product;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mx.unam.dgtic.entity.Product;
@@ -30,12 +31,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findAll(Pageable pageable) {
-        return productRepository.findAll(pageable);
+        Page<Product> products = productRepository.findAll(pageable);
+        deleteCampos(products);
+        return products;
     }
 
     @Override
     public Page<Product> searchByAllColumns(String search, Pageable pageable) {
-        return productRepository.searchByAllColumns(search, pageable);
+        Page<Product> products = productRepository.searchByAllColumns(search, pageable);
+        deleteCampos(products);
+        return products;
     }
 
     @Override
@@ -45,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void save(Product entity) throws Exception {
+    public Product save(Product entity) throws Exception {
         log.info("Save Product {}", entity);
         if (entity.getId() == null || entity.getId().isBlank()) {
             entity.setId(UUID.randomUUID().toString());
@@ -54,11 +59,16 @@ public class ProductServiceImpl implements ProductService {
 
         entity.setUpdatedAt(Instant.now());
         productRepository.save(entity);
+        return entity;
     }
 
     @Override
     public void delete(String id) throws Exception {
-        productRepository.deleteById(id);
+        productRepository.findById(id).ifPresentOrElse(productRepository::delete,
+                () -> {
+                    throw new EntityNotFoundException("No existe Product con id: " + id);
+                }
+        );
     }
 
     @Override
@@ -80,5 +90,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> searchByAllColumnsByIdProveedorId(String search, String Id) {
         return productRepository.searchByAllColumnsAndProveedorId(search, Id);
+    }
+
+    private void deleteCampos(Page<Product> products) {
+        for (Product product : products.getContent()) {
+            product.getProveedor().setCategory(null);
+            product.getProveedor().setImage(null);
+            product.getProveedor().setPhone(null);
+            product.getProveedor().setEmail(null);
+            product.getProveedor().setProducts(null);
+        }
     }
 }

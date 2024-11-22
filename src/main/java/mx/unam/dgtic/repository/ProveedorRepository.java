@@ -16,8 +16,8 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, String> {
 
     Optional<Proveedor> findByName(String name);
 
-    @Query(name = "Proveedor.findActiveByCategory")
-    List<Proveedor> findActiveByCategory(String categoryName);
+//    @Query(name = "Proveedor.findActiveByCategory")
+//    List<Proveedor> findActiveByCategory(String categoryName);
 
     @Query("SELECT p FROM Proveedor p " +
             "JOIN FETCH p.email " +
