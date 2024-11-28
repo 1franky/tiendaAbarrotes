@@ -100,13 +100,46 @@ CREATE TABLE Products_Tickets (
     CHECK(precioVenta > 0)
 );
 
+-- Crear la tabla Roles
+CREATE TABLE Roles (
+    `id` VARCHAR(40) PRIMARY KEY,
+    `created_at` DATETIME NOT NULL,
+    `updated_at` DATETIME NOT NULL,
+    `name` VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Crear la tabla Users
 CREATE TABLE Users (
     `id` VARCHAR(40) PRIMARY KEY,
-    `name` varchar(100)  NOT NULL,
-    `tipoUser` integer NOT NULL,
-    `password` varchar(255),  -- Password encriptado
-    `image_id` VARCHAR(40)
+    `created_at` DATETIME NOT NULL,
+    `updated_at` DATETIME NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(100) NOT NULL UNIQUE,
+    `password` VARCHAR(255),  -- Contraseña encriptada
+    `image_id` VARCHAR(40),
+    `isActive` BOOLEAN DEFAULT TRUE
 );
+
+-- Crear la tabla intermedia UserRoles para la relación muchos a muchos
+CREATE TABLE UserRoles (
+    `id` VARCHAR(40) PRIMARY KEY,
+    `user_id` VARCHAR(40) NOT NULL,
+    `role_id` VARCHAR(40) NOT NULL,
+    `assigned_at` DATETIME NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (`user_id`) REFERENCES Users(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`role_id`) REFERENCES Roles(`id`) ON DELETE CASCADE
+);
+
+-- CREATE TABLE Users (
+--     `id` VARCHAR(40) PRIMARY KEY,
+--     `created_at` datetime NOT NULL,
+--     `updated_at` datetime NOT NULL,
+--     `name` varchar(100)  NOT NULL,
+--     `email` varchar(100)  NOT NULL UNIQUE,
+--     `tipoUser` integer NOT NULL,
+--     `password` varchar(255),  -- Password encriptado
+--     `image_id` VARCHAR(40)
+-- );
 
 -- Add foreign key constraints
 ALTER TABLE Proveedores
@@ -124,8 +157,8 @@ ALTER TABLE Tickets
     ADD CONSTRAINT fk_ticket_client FOREIGN KEY (client_id) REFERENCES Clients(id);
 
 ALTER TABLE Products_Tickets
-    ADD CONSTRAINT fk_productstickets_product FOREIGN KEY (product_id) REFERENCES Products(id),
-    ADD CONSTRAINT fk_productstickets_ticket FOREIGN KEY (ticket_id) REFERENCES Tickets(id);
+    ADD CONSTRAINT fk_products_tickets_product FOREIGN KEY (product_id) REFERENCES Products(id),
+    ADD CONSTRAINT fk_products_tickets_ticket FOREIGN KEY (ticket_id) REFERENCES Tickets(id);
 
 ALTER TABLE Users
     ADD CONSTRAINT fk_user_image FOREIGN KEY (image_id) REFERENCES Images(id);
@@ -139,8 +172,8 @@ CREATE INDEX idx_product_provider ON Products(proveedor_id);
 CREATE INDEX idx_product_category ON Products(category_id);
 CREATE INDEX idx_product_image ON Products(image_id);
 CREATE INDEX idx_ticket_client ON Tickets(client_id);
-CREATE INDEX idx_productstickets_product ON Products_Tickets(product_id);
-CREATE INDEX idx_productstickets_ticket ON Products_Tickets(ticket_id);
+CREATE INDEX idx_products_tickets_product ON Products_Tickets(product_id);
+CREATE INDEX idx_products_tickets_ticket ON Products_Tickets(ticket_id);
 CREATE INDEX idx_user_image ON Users(image_id);
 CREATE INDEX idx_product_name ON Products(name);
 CREATE INDEX idx_product_activo ON Products(activo);
@@ -150,4 +183,4 @@ CREATE INDEX idx_client_name ON Clients(name);
 CREATE INDEX idx_ticket_fecha ON Tickets(fecha);
 CREATE INDEX idx_category_name ON Categories(name);
 CREATE INDEX idx_user_name ON Users(name);
-CREATE INDEX idx_user_tipoUser ON Users(tipoUser);
+CREATE INDEX idx_user_email ON Users(email);

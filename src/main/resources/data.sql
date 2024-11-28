@@ -106,16 +106,25 @@ INSERT INTO Products_Tickets (id, precioVenta, product_id, ticket_id) VALUES
     ('pt-9i0j1k2l-3456-78ij-4567-9012345678ij', 30.0, '9i0j1k2l-3456-78ij-4567-9012345678ij', '7g8h9i0j-1234-56gh-2345-7890123456gh'),
     ('pt-0j1k2l3m-4567-89jk-5678-0123456789jk', 100.0, '0j1k2l3m-4567-89jk-5678-0123456789jk', '8h9i0j1k-2345-67hi-3456-8901234567hi');
 
-INSERT INTO Users (id, name, tipoUser, password, image_id) VALUES
-    ('1a2b3c4d-5678-90ab-cdef-1234567890ab', 'Admin Juan', 1, 'hashed_password_admin1', 'e5f6a7b8-c9d0-1234-ef01-567890123456'),
-    ('2b3c4d5e-6789-01bc-def0-2345678901bc', 'Empleado María', 2, 'hashed_password_emp1', 'f6a7b8c9-d0e1-2345-f012-678901234567'),
-    ('3c4d5e6f-7890-12cd-ef01-3456789012cd', 'Empleado Carlos', 2, 'hashed_password_emp2', 'g7b8c9d0-e1f2-3456-0123-789012345678'),
-    ('4d5e6f7g-8901-23de-f012-4567890123de', 'Admin Laura', 1, 'hashed_password_admin2', 'h8c9d0e1-f2a3-4567-1234-890123456789'),
-    ('5e6f7g8h-9012-34ef-0123-5678901234ef', 'Empleado Pedro', 2, 'hashed_password_emp3', 'i9d0e1f2-a3b4-5678-2345-901234567890'),
-    ('6f7g8h9i-0123-45fg-1234-6789012345fg', 'Empleado Ana', 2, 'hashed_password_emp4', 'j0e1f2a3-b4c5-6789-3456-012345678901'),
-    ('7g8h9i0j-1234-56gh-2345-7890123456gh', 'Admin Luis', 1, 'hashed_password_admin3', 'e5f6a7b8-c9d0-1234-ef01-567890123456'),
-    ('8h9i0j1k-2345-67hi-3456-8901234567hi', 'Empleado Sofía', 2, 'hashed_password_emp5', 'e5f6a7b8-c9d0-1234-ef01-567890123456'),
-    ('9i0j1k2l-3456-78ij-4567-9012345678ij', 'Empleado Diego', 2, 'hashed_password_emp6', 'j0e1f2a3-b4c5-6789-3456-012345678901'),
-    ('0j1k2l3m-4567-89jk-5678-0123456789jk', 'Admin Valentina', 1, 'hashed_password_admin4', 'j0e1f2a3-b4c5-6789-3456-012345678901');
 
+INSERT INTO Roles (`id`, `created_at`, `updated_at`, `name`)
+VALUES
+    ('e3f4g5h6-i7j8-9012-klmn-345678901234', NOW(), NOW(), 'ADMIN'),
+    ('e3f4g5h6-i7j8-9012-klmn-345678901235', NOW(), NOW(), 'GERENTE'),
+    ('e3f4g5h6-i7j8-9012-klmn-345678901236', NOW(), NOW(), 'VENDEDOR');
+
+INSERT INTO Users (`id`, `created_at`, `updated_at`, `name`, `email`, `password`, `image_id`, `isActive`)
+VALUES
+    ('1a2b3c4d-5678-90ab-cdef-1234567890ab', NOW(), NOW(), 'Alice Smith', 'alice@example.com', 'hashed_password_1', 'e5f6a7b8-c9d0-1234-ef01-567890123456', TRUE),
+    ('2b3c4d5e-6789-01bc-def0-2345678901bc', NOW(), NOW(), 'Bob Johnson', 'bob@example.com', 'hashed_password_2', 'f6a7b8c9-d0e1-2345-f012-678901234567', TRUE),
+    ('3c4d5e6f-7890-12cd-ef01-3456789012cd', NOW(), NOW(), 'Charlie Brown', 'charlie@example.com', 'hashed_password_3', 'g7b8c9d0-e1f2-3456-0123-789012345678', TRUE);
+
+INSERT INTO UserRoles (`id`, `user_id`, `role_id`, `assigned_at`)
+VALUES
+    ('5e6f7g8h-9012-34ef-0123-5678901234ef', '1a2b3c4d-5678-90ab-cdef-1234567890ab', 'e3f4g5h6-i7j8-9012-klmn-345678901234', NOW()), -- Alice es ADMIN
+    ('6f7g8h9i-0123-45fg-1234-6789012345fg', '1a2b3c4d-5678-90ab-cdef-1234567890ab', 'e3f4g5h6-i7j8-9012-klmn-345678901235', NOW()), -- Alice es GERENTE
+    ('7g8h9i0j-1234-56gh-2345-7890123456gh', '1a2b3c4d-5678-90ab-cdef-1234567890ab', 'e3f4g5h6-i7j8-9012-klmn-345678901236', NOW()), -- Alice es VENDEDOR
+    ('8h9i0j1k-2345-67hi-3456-8901234567hi', '2b3c4d5e-6789-01bc-def0-2345678901bc', 'e3f4g5h6-i7j8-9012-klmn-345678901235', NOW()), -- Bob es GERENTE
+    ('9i0j1k2l-3456-78ij-4567-9012345678ij', '2b3c4d5e-6789-01bc-def0-2345678901bc', 'e3f4g5h6-i7j8-9012-klmn-345678901236', NOW()), -- Bob es VENDEDOR
+    ('0j1k2l3m-4567-89jk-5678-0123456789jk', '3c4d5e6f-7890-12cd-ef01-3456789012cd', 'e3f4g5h6-i7j8-9012-klmn-345678901236', NOW()); -- Charlie es VENDEDOR
 
