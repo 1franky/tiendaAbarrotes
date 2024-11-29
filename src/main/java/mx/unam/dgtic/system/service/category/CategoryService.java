@@ -2,6 +2,8 @@ package mx.unam.dgtic.system.service.category;
 
 import mx.unam.dgtic.system.entity.Category;
 import mx.unam.dgtic.system.service.BaseService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 

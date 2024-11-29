@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
       lang="es">
 <head th:replace="~{plantillas/base :: head}"></head>
 <body>
@@ -8,6 +8,19 @@
     <h1 th:text="${contenido}"></h1>
     <h1 th:text="${nombreAplicacion}"></h1>
     <h1 th:text="${fecha}"></h1>
+
+
+    <div>
+        <p>Principal: <span sec:authentication="principal">NOT FOUND</span></p>
+        <p>Spring Roles: <span sec:authentication="authorities">NOT FOUND</span></p>
+        <p>Credentials: <span sec:authentication="credentials">NOT FOUND</span></p>
+
+        <p></p>
+        <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+            <a class="nav-link" th:href="@{/category/}">Categorias</a>
+        </li>
+    </div>
+
 </main>
 <footer th:replace="~{plantillas/base :: footer}"></footer>
 </body>

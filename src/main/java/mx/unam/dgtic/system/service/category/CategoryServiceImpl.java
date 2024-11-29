@@ -72,12 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
                     throw new EntityNotFoundException("No existe Category con id: " + id);
                 }
         );
-        Optional<Category> categoryOpt = categoryRepository.findById(id);
-        if (categoryOpt.isPresent()) {
-            categoryRepository.delete(categoryOpt.get());
-            return;
-        }
-        throw new EntityNotFoundException("No existe Category con id: " + id);
+        categoryRepository.deleteById(id);
     }
 
     @Override

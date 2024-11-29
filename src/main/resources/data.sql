@@ -107,24 +107,24 @@ INSERT INTO Products_Tickets (id, precioVenta, product_id, ticket_id) VALUES
     ('pt-0j1k2l3m-4567-89jk-5678-0123456789jk', 100.0, '0j1k2l3m-4567-89jk-5678-0123456789jk', '8h9i0j1k-2345-67hi-3456-8901234567hi');
 
 
-INSERT INTO Roles (`id`, `created_at`, `updated_at`, `name`)
+INSERT INTO sec_role (`usr_created_by`, `usr_id_status`, `usr_modified_by`, `usr_role_name`)
 VALUES
-    ('e3f4g5h6-i7j8-9012-klmn-345678901234', NOW(), NOW(), 'ADMIN'),
-    ('e3f4g5h6-i7j8-9012-klmn-345678901235', NOW(), NOW(), 'GERENTE'),
-    ('e3f4g5h6-i7j8-9012-klmn-345678901236', NOW(), NOW(), 'VENDEDOR');
+    (1, 1, 1, 'ADMIN'),
+    (1, 1, 1, 'GERENTE'),
+    (1, 1, 1, 'USER');
 
-INSERT INTO Users (`id`, `created_at`, `updated_at`, `name`, `email`, `password`, `image_id`, `isActive`)
+INSERT INTO sec_user (`use_created_by`, `use_email`, `use_first_name`, `use_id_status`, `use_last_name`, `use_modified_by`, `use_passwd`,`image_id`)
 VALUES
-    ('1a2b3c4d-5678-90ab-cdef-1234567890ab', NOW(), NOW(), 'Alice Smith', 'alice@example.com', 'hashed_password_1', 'e5f6a7b8-c9d0-1234-ef01-567890123456', TRUE),
-    ('2b3c4d5e-6789-01bc-def0-2345678901bc', NOW(), NOW(), 'Bob Johnson', 'bob@example.com', 'hashed_password_2', 'f6a7b8c9-d0e1-2345-f012-678901234567', TRUE),
-    ('3c4d5e6f-7890-12cd-ef01-3456789012cd', NOW(), NOW(), 'Charlie Brown', 'charlie@example.com', 'hashed_password_3', 'g7b8c9d0-e1f2-3456-0123-789012345678', TRUE);
+    (1, 'user_1@example.com', 'Alice', 1, 'Smith', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','e5f6a7b8-c9d0-1234-ef01-567890123456'),
+    (1, 'user_2@example.com', 'Bob', 1, 'Johnson', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','f6a7b8c9-d0e1-2345-f012-678901234567'),
+    (1, 'user_3@example.com', 'Charlie', 1, 'Brown', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','g7b8c9d0-e1f2-3456-0123-789012345678');
 
-INSERT INTO UserRoles (`id`, `user_id`, `role_id`, `assigned_at`)
+INSERT INTO sec_user_role_relation (`urr_id_user`, `urr_id_user_role`)
 VALUES
-    ('5e6f7g8h-9012-34ef-0123-5678901234ef', '1a2b3c4d-5678-90ab-cdef-1234567890ab', 'e3f4g5h6-i7j8-9012-klmn-345678901234', NOW()), -- Alice es ADMIN
-    ('6f7g8h9i-0123-45fg-1234-6789012345fg', '1a2b3c4d-5678-90ab-cdef-1234567890ab', 'e3f4g5h6-i7j8-9012-klmn-345678901235', NOW()), -- Alice es GERENTE
-    ('7g8h9i0j-1234-56gh-2345-7890123456gh', '1a2b3c4d-5678-90ab-cdef-1234567890ab', 'e3f4g5h6-i7j8-9012-klmn-345678901236', NOW()), -- Alice es VENDEDOR
-    ('8h9i0j1k-2345-67hi-3456-8901234567hi', '2b3c4d5e-6789-01bc-def0-2345678901bc', 'e3f4g5h6-i7j8-9012-klmn-345678901235', NOW()), -- Bob es GERENTE
-    ('9i0j1k2l-3456-78ij-4567-9012345678ij', '2b3c4d5e-6789-01bc-def0-2345678901bc', 'e3f4g5h6-i7j8-9012-klmn-345678901236', NOW()), -- Bob es VENDEDOR
-    ('0j1k2l3m-4567-89jk-5678-0123456789jk', '3c4d5e6f-7890-12cd-ef01-3456789012cd', 'e3f4g5h6-i7j8-9012-klmn-345678901236', NOW()); -- Charlie es VENDEDOR
+    (1, 1), -- Alice es ADMIN
+    (1, 2), -- Alice es GERENTE
+    (1, 3), -- Alice es USER
+    (2, 2), -- Bob es GERENTE
+    (2, 3), -- Bob es USER
+    (3, 3); -- Charlie es USER
 

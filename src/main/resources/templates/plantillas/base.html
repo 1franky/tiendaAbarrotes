@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="es">
+<!--<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="es">-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+        lang="es">
 <head th:fragment="head">
     <meta charset="UTF-8">
     <title>Spring</title>
@@ -31,16 +35,16 @@
                 </ul>
 
                 <ul class="navbar-nav me-auto mb-10 mb-lg-0 align-content-end align-content-between">
-<!--                    categorias-->
-                    <li Sec:authorize="hasRole('ADMIN')" class="nav-item">
+<!--                    categorias  [GERENTE, ADMIN, USER] -->
+                    <li sec:authorize= "hasAnyAuthority('ADMIN')" class="nav-item">
                         <a class="nav-link" th:href="@{/category/}">Categorias</a>
                     </li>
 <!--                    proveedor-->
-                    <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                    <li sec:authorize="hasAnyAuthority('ADMIN', 'GERENTE')" class="nav-item">
                         <a class="nav-link" th:href="@{/proveedor/}">Proveedores</a>
                     </li>
 <!--                    products-->
-                    <li sec:authorize="hasRole('ADMIN')" class="nav-item">
+                    <li sec:authorize="hasAnyAuthority('ADMIN', 'GERENTE', 'USER')" class="nav-item">
                         <a class="nav-link" th:href="@{/product/}">Products</a>
                     </li>
 <!--                    <li class="nav-item dropdown">-->
