@@ -5,8 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import mx.unam.dgtic.auth.dto.UserInfoDTO;
-import mx.unam.dgtic.auth.dto.UserInfoRoleDTO;
-import mx.unam.dgtic.auth.exception.UserInfoNotFoundException;
 import mx.unam.dgtic.auth.service.UserInfoService;
 import mx.unam.dgtic.security.jwt.JWTTokenProvider;
 import mx.unam.dgtic.security.request.JwtRequest;
@@ -24,9 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Log4j2
 @Controller

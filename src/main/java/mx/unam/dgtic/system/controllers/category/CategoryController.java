@@ -3,28 +3,19 @@ package mx.unam.dgtic.system.controllers.category;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import mx.unam.dgtic.system.api.responses.ResponseGeneral;
-import mx.unam.dgtic.system.controllers.BaseController;
 import mx.unam.dgtic.system.entity.Category;
-import mx.unam.dgtic.system.service.BaseService;
 import mx.unam.dgtic.system.service.category.CategoryService;
 import mx.unam.dgtic.system.utils.RenderPagina;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author FRANCISCO MIZTLI LOPEZ SALINAS
