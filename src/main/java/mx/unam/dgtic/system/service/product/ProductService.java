@@ -6,8 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 /**
  * @author FRANCISCO MIZTLI LOPEZ SALINAS
  * @user franciscolopez
@@ -20,8 +18,6 @@ public interface ProductService extends BaseService<Product> {
 
     Page<Product> findAllByProveedorId(String Id, Pageable pageable);
     Page<Product> searchByAllColumnsByIdProveedorId(String search, String Id, Pageable pageable);
-    List<Product> searchByAllColumnsByIdProveedorId(String search, String Id);
-
     Boolean updateFull(Product product, MultipartFile imageFile);
 
 }

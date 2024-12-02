@@ -5,12 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mx.unam.dgtic.system.entity.Category;
 import mx.unam.dgtic.system.entity.Proveedor;
-import mx.unam.dgtic.system.repository.ProveedorRepository;
 import mx.unam.dgtic.system.service.BaseService;
 import mx.unam.dgtic.system.service.category.CategoryService;
 import mx.unam.dgtic.system.service.proveedor.ProveedorService;
 import mx.unam.dgtic.system.utils.RenderPagina;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,14 +39,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Log4j2
 public class ProveedorController {
-    private final ProveedorRepository proveedorRepository;
 
     private final ProveedorService proveedorService;
-
     private final CategoryService categoryService;
-
-    @Value("${app.upload.dir}")
-    private String UPLOAD_DIR;
 
     protected BaseService<Proveedor> getService() {
         return proveedorService;
@@ -62,21 +55,11 @@ public class ProveedorController {
         return "proveedores";
     }
 
-    protected Class<Proveedor> getEntityClass() {
-        return Proveedor.class;
-    }
-
-    protected Proveedor cleanObject(Proveedor object) {
-        return object;
-    }
-
     protected Map<String, List<Object>> getSelects(){
         Map<String, List<Object>> select = new HashMap<>();
         select.put("selectCategory", new ArrayList<>());
         List<Category> categories = categoryService.getCategories();
-        categories.forEach(category -> {
-            select.get("selectCategory").add(category);
-        });
+        categories.forEach(category -> select.get("selectCategory").add(category));
         return select;
     }
 
@@ -88,7 +71,7 @@ public class ProveedorController {
             model.addAttribute("imgDefault", "/images/default2.jpg");
         }
         model.addAttribute("prov", proveedor);
-        return getEntityName() + "/cardDetails";
+        return "proveedor/cardDetails";
     }
 
     @GetMapping("edit/{id}")
@@ -104,7 +87,7 @@ public class ProveedorController {
             model.addAttribute(entry.getKey(), entry.getValue());
         model.addAttribute("prov", proveedor);
         model.addAttribute("contenido", "Editar Proveedor: " + proveedor.getName());
-        return getEntityName() + "/editFull";
+        return "proveedor/editFull";
     }
 
     @PostMapping("edit")
@@ -120,11 +103,11 @@ public class ProveedorController {
                 String fieldNameError = e.getField().replace(".", "") + "Error";
                 flash.addFlashAttribute(fieldNameError, e.getDefaultMessage());
             });
-            return "redirect:/" + getEntityName() + "/edit/" + proveedor.getId();
+            return "redirect:/proveedor/edit/" + proveedor.getId();
         }
         Boolean r = proveedorService.updateFull(proveedor, imageFile);
         log.warn("Respuesta actualizar: {}", r);
-        return "redirect:/" + getEntityName() + "/details/" + proveedor.getId();
+        return "redirect:/proveedor/details/" + proveedor.getId();
     }
 
     @GetMapping("/")
@@ -149,7 +132,7 @@ public class ProveedorController {
 
         Sort sortOrder = Sort.by(Sort.Direction.fromString(direction), sort);
         Pageable pageable = PageRequest.of(page, size, sortOrder);
-        Page<Proveedor> entities = null;
+        Page<Proveedor> entities;
 
         if (search != null && !search.isEmpty()) {
             entities = getService().searchByAllColumns(search, pageable);
@@ -168,7 +151,7 @@ public class ProveedorController {
         model.addAttribute("direction", direction);
         model.addAttribute("invertDirection", "asc".equals(direction) ? "desc" : "asc");
 
-        return getEntityName() + "/" + getEntityName();
+        return "proveedor/proveedor";
 
     }
 
@@ -180,7 +163,7 @@ public class ProveedorController {
         flash.addFlashAttribute(getEntityName(), entity);
         if (result.hasErrors()) {
             errorsValidation(result, flash, entity);
-            return "redirect:/" + getEntityName() + "/";
+            return "redirect:/proveedor/";
         }
 
         try {
@@ -190,7 +173,7 @@ public class ProveedorController {
             log.error("Error al guardar: {}", e.getMessage());
             errorsSave(flash, entity, e);
         }
-        return "redirect:/" + getEntityName() + "/";
+        return "redirect:/proveedor/";
     }
 
     @GetMapping("eliminar/{id}")
@@ -203,7 +186,7 @@ public class ProveedorController {
             log.error("No se puede eliminar {}", id);
             flash.addFlashAttribute("error", "Error al Eliminar.");
         }
-        return "redirect:/" + getEntityName() + "/";
+        return "redirect:/proveedor/";
     }
 
     protected void errorsValidation(BindingResult result, RedirectAttributes flash, Proveedor entity) {
