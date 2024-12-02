@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static mx.unam.dgtic.system.utils.Utils.deleteImage;
+
 /**
  * @author FRANCISCO MIZTLI LOPEZ SALINAS
  * @user franciscolopez
@@ -106,7 +108,7 @@ public class ProveedorServiceImpl implements ProveedorService {
                     emailRepository.delete(proveedor.getEmail());
                 }
                 proveedorRepository.delete(proveedor);
-                deleteImage(imgToDelete);
+                deleteImage(UPLOAD_DIRECTORY, imgToDelete);
             }, () -> {
                 throw new EntityNotFoundException("No existe Proveedor con id: " + id);
             });
@@ -167,7 +169,7 @@ public class ProveedorServiceImpl implements ProveedorService {
             if (!imgToDelete.equals(image.getPathImage())){
                 log.info("New img {}", image.getPathImage());
                 log.info("New old delete {}", imgToDelete);
-                deleteImage(imgToDelete);
+                deleteImage(UPLOAD_DIRECTORY, imgToDelete);
             }
 
         }catch (Exception e){
@@ -245,6 +247,7 @@ public class ProveedorServiceImpl implements ProveedorService {
             Files.write(fullPath, image.getBytes());
             imageDB.setPathImage("images/" + fileName);
             log.info("Archivo guardado en {}", fullPath);
+            imageRepository.save(imageDB);
         } catch (IOException e) {
             log.error("Error al guardar el archivo: {}", e.getMessage());
             return imageDB;
@@ -252,20 +255,20 @@ public class ProveedorServiceImpl implements ProveedorService {
         return imageDB;
     }
 
-    public void deleteImage(String imageName)  {
-        Path imagePath = Paths.get(UPLOAD_DIRECTORY, imageName);
-        log.info("esta si se elimina: {}", imagePath);
-        try{
-            if (Files.exists(imagePath)) {
-                Files.delete(imagePath); // Elimina el archivo
-                log.info("Archivo eliminado en {}", imagePath);
-            } else {
-                log.warn("No existe la imagen: {}", imageName);
-            }
-        }catch (IOException e){
-            log.error("Error al eliminar el archivo: {} erro -> {}", imageName, e.getMessage());
-        }
-    }
+//    public void deleteImage(String imageName)  {
+//        Path imagePath = Paths.get(UPLOAD_DIRECTORY, imageName);
+//        log.info("esta si se elimina: {}", imagePath);
+//        try{
+//            if (Files.exists(imagePath)) {
+//                Files.delete(imagePath); // Elimina el archivo
+//                log.info("Archivo eliminado en {}", imagePath);
+//            } else {
+//                log.warn("No existe la imagen: {}", imageName);
+//            }
+//        }catch (IOException e){
+//            log.error("Error al eliminar el archivo: {} erro -> {}", imageName, e.getMessage());
+//        }
+//    }
 
     private void deleteCampos(Page<Proveedor> proveedors) {
         for (Proveedor proveedor : proveedors.getContent()) {

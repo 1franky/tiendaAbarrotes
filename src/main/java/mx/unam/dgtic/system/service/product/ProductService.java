@@ -4,6 +4,7 @@ import mx.unam.dgtic.system.entity.Product;
 import mx.unam.dgtic.system.service.BaseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +22,6 @@ public interface ProductService extends BaseService<Product> {
     Page<Product> searchByAllColumnsByIdProveedorId(String search, String Id, Pageable pageable);
     List<Product> searchByAllColumnsByIdProveedorId(String search, String Id);
 
-
+    Boolean updateFull(Product product, MultipartFile imageFile);
 
 }
