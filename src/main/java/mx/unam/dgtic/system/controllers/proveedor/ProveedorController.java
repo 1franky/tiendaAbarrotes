@@ -57,14 +57,6 @@ public class ProveedorController {
         return "proveedores";
     }
 
-    protected Class<Proveedor> getEntityClass() {
-        return Proveedor.class;
-    }
-
-    protected Proveedor cleanObject(Proveedor object) {
-        return object;
-    }
-
     protected Map<String, List<Object>> getSelects(){
         Map<String, List<Object>> select = new HashMap<>();
         select.put("selectCategory", new ArrayList<>());
@@ -113,7 +105,7 @@ public class ProveedorController {
                 String fieldNameError = e.getField().replace(".", "") + "Error";
                 flash.addFlashAttribute(fieldNameError, e.getDefaultMessage());
             });
-            return "redirect:/" + getEntityName() + "/edit/" + proveedor.getId();
+            return "redirect:/proveedor/edit/" + proveedor.getId();
         }
         Boolean r = proveedorService.updateFull(proveedor, imageFile);
         log.warn("Respuesta actualizar: {}", r);
@@ -142,7 +134,7 @@ public class ProveedorController {
 
         Sort sortOrder = Sort.by(Sort.Direction.fromString(direction), sort);
         Pageable pageable = PageRequest.of(page, size, sortOrder);
-        Page<Proveedor> entities = null;
+        Page<Proveedor> entities;
 
         if (search != null && !search.isEmpty()) {
             entities = getService().searchByAllColumns(search, pageable);

@@ -78,19 +78,6 @@ public interface ProductRepository extends JpaRepository<Product, String> {
             "LOWER(CASE WHEN p.activo = true THEN 'true' ELSE 'false' END) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<Product> searchByAllColumnsAndProveedorId(@Param("search") String search, @Param("id") String id, Pageable pageable);
 
-    @Query("SELECT p FROM Product p WHERE " +
-            "p.proveedor.id = :id AND " +
-            "LOWER(FUNCTION('TO_CHAR', p.createdAt, 'YYYY-MM-DD HH24:MI:SS')) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-            "LOWER(FUNCTION('TO_CHAR', p.updatedAt, 'YYYY-MM-DD HH24:MI:SS')) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-            "LOWER(p.name) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-            "LOWER(p.description) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-            "LOWER(p.proveedor.name) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-            "CAST(p.precioVenta AS string) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-            "CAST(p.precioProveedor AS string) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-            "CAST(p.existencia AS string) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-            "LOWER(CASE WHEN p.activo = true THEN 'true' ELSE 'false' END) LIKE LOWER(CONCAT('%', :search, '%'))")
-    List<Product> searchByAllColumnsAndProveedorId(@Param("search") String search, @Param("id") String id);
-
     Page<Product> findByProveedor_Id(String id, Pageable pageable);
 
 

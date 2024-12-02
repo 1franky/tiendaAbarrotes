@@ -109,11 +109,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> searchByAllColumnsByIdProveedorId(String search, String Id) {
-        return productRepository.searchByAllColumnsAndProveedorId(search, Id);
-    }
-
-    @Override
     public Boolean updateFull(Product product, MultipartFile imageFile) {
         try {
             productRepository.findById(product.getId()).ifPresent(p -> {
