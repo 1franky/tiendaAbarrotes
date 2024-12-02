@@ -255,21 +255,6 @@ public class ProveedorServiceImpl implements ProveedorService {
         return imageDB;
     }
 
-//    public void deleteImage(String imageName)  {
-//        Path imagePath = Paths.get(UPLOAD_DIRECTORY, imageName);
-//        log.info("esta si se elimina: {}", imagePath);
-//        try{
-//            if (Files.exists(imagePath)) {
-//                Files.delete(imagePath); // Elimina el archivo
-//                log.info("Archivo eliminado en {}", imagePath);
-//            } else {
-//                log.warn("No existe la imagen: {}", imageName);
-//            }
-//        }catch (IOException e){
-//            log.error("Error al eliminar el archivo: {} erro -> {}", imageName, e.getMessage());
-//        }
-//    }
-
     private void deleteCampos(Page<Proveedor> proveedors) {
         for (Proveedor proveedor : proveedors.getContent()) {
             proveedor.setImage(null);
