@@ -25,6 +25,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
             "LOWER(CASE WHEN p.activo = true THEN 'true' ELSE 'false' END) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<Product> searchByAllColumns(@Param("search") String search, Pageable pageable);
 
+
     @Query("SELECT p FROM Product p WHERE " +
             "LOWER(FUNCTION('TO_CHAR', p.createdAt, 'YYYY-MM-DD HH24:MI:SS')) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(FUNCTION('TO_CHAR', p.updatedAt, 'YYYY-MM-DD HH24:MI:SS')) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
