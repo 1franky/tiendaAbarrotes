@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mx.unam.dgtic.system.entity.Product;
-import mx.unam.dgtic.system.entity.Proveedor;
 import mx.unam.dgtic.system.service.BaseService;
 import mx.unam.dgtic.system.service.category.CategoryService;
 import mx.unam.dgtic.system.service.product.ProductService;
@@ -244,9 +243,8 @@ public class ProductController {
             });
             return "redirect:/" + getEntityName() + "/edit/" + product.getId();
         }
-        // TODO
-//        Boolean r = productService.updateFull(product, imageFile);
-//        log.warn("Respuesta actualizar: {}", r);
+        Boolean r = productService.updateFull(product, imageFile);
+        log.warn("Respuesta actualizar: {}", r);
         return "redirect:/" + getEntityName() + "/details/" + product.getId();
     }
 

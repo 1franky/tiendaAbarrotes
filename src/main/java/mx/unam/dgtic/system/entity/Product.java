@@ -103,16 +103,16 @@ public class Product {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 
-    @Override
-    public String toString() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        mapper.registerModule(new JavaTimeModule());
-        try {
-            return mapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Error al convertir el objeto Product a JSON " + e.getMessage());
-        }
-    }
+//    @Override
+//    public String toString() {
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+//        mapper.registerModule(new JavaTimeModule());
+//        try {
+//            return mapper.writeValueAsString(this);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException("Error al convertir el objeto Product a JSON " + e.getMessage());
+//        }
+//    }
 
 }
