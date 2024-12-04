@@ -76,13 +76,11 @@ public class ProductController {
         select.put("selectProveedor", new ArrayList<>());
         select.put("selectCategory", new ArrayList<>());
 
-        categoryService.getCategories().forEach(category -> {
-            select.get("selectCategory").add(category);
-        });
+        // Category
+        categoryService.getCategories().forEach(select.get("selectCategory")::add);
 
-        proveedorService.getProveedores().forEach(proveedor -> {
-            select.get("selectProveedor").add(proveedor);
-        });
+        // Proveedor
+        proveedorService.getProveedores().forEach(select.get("selectProveedor")::add);
 
         return select;
     }
@@ -151,9 +149,7 @@ public class ProductController {
             entity = getService().getEmpty();
         }
 
-        Map<String, List<Object>> selects = getSelects();
-        for (Map.Entry<String, List<Object>> entry : selects.entrySet())
-            model.addAttribute(entry.getKey(), entry.getValue());
+        getSelects().forEach(model::addAttribute);
 
         Sort sortOrder = Sort.by(Sort.Direction.fromString(direction), sort);
         Pageable pageable = PageRequest.of(page, size, sortOrder);

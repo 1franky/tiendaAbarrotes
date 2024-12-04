@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Table(name = "sec_role")
+@ToString
 public class UserInfoRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
