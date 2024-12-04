@@ -17,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Table(name = "sec_user")
+@ToString
 public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

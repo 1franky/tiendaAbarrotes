@@ -18,7 +18,6 @@ import java.util.List;
 public interface ProveedorService extends BaseService<Proveedor> {
 
     List<Proveedor> getProveedores();
-
     Boolean updateFull(Proveedor proveedor, MultipartFile imageFile);
 
 }

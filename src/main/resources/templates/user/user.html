@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{plantillas/base :: head}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+<header th:replace="~{plantillas/base :: header}"></header>
+
+<div th:if="${errorModal != null}" id="errorModal"></div>
+<main class="container text-center opacity-75 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <div class="container ">
+        <h1 class="" th:text="${contenido}"></h1>
+    </div>
+    <div class="container mt-5">
+        <div class="row justify-content-between">
+            <!-- Botón para Crear User -->
+
+            <div th:replace="~{user/table :: crear}"></div>
+
+
+            <div th:replace="~{user/table :: buscar}"></div>
+
+
+        </div>
+
+    </div>
+
+    <!-- Tabla de Usuarios -->
+    <table th:replace="~{user/table :: table}"></table>
+
+
+
+    <!-- Paginador -->
+    <nav th:replace="~{plantillas/pag-nav::paginador}"></nav>
+
+</main>
+
+<footer th:replace="~{plantillas/base :: footer}"></footer>
+
+
+<div th:replace="~{user/table :: modalCrear}"></div>
+
+
+<div th:replace="~{user/table :: modalEliminar}"></div>
+
+<script th:replace="~{user/table :: javascript}"></script>
+
+
+</body>
+</html>

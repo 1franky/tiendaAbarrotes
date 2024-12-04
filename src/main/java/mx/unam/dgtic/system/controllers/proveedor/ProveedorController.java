@@ -57,9 +57,11 @@ public class ProveedorController {
 
     protected Map<String, List<Object>> getSelects(){
         Map<String, List<Object>> select = new HashMap<>();
+
+        // Category
         select.put("selectCategory", new ArrayList<>());
-        List<Category> categories = categoryService.getCategories();
-        categories.forEach(category -> select.get("selectCategory").add(category));
+        categoryService.getCategories().forEach(select.get("selectCategory")::add);
+
         return select;
     }
 
@@ -126,9 +128,7 @@ public class ProveedorController {
             entity = getService().getEmpty();
         }
 
-        Map<String, List<Object>> selects = getSelects();
-        for (Map.Entry<String, List<Object>> entry : selects.entrySet())
-            model.addAttribute(entry.getKey(), entry.getValue());
+        getSelects().forEach(model::addAttribute);
 
         Sort sortOrder = Sort.by(Sort.Direction.fromString(direction), sort);
         Pageable pageable = PageRequest.of(page, size, sortOrder);
