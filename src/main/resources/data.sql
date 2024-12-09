@@ -106,16 +106,25 @@ INSERT INTO Products_Tickets (id, precioVenta, product_id, ticket_id) VALUES
     ('pt-9i0j1k2l-3456-78ij-4567-9012345678ij', 30.0, '9i0j1k2l-3456-78ij-4567-9012345678ij', '7g8h9i0j-1234-56gh-2345-7890123456gh'),
     ('pt-0j1k2l3m-4567-89jk-5678-0123456789jk', 100.0, '0j1k2l3m-4567-89jk-5678-0123456789jk', '8h9i0j1k-2345-67hi-3456-8901234567hi');
 
-INSERT INTO Users (id, name, tipoUser, password, image_id) VALUES
-    ('1a2b3c4d-5678-90ab-cdef-1234567890ab', 'Admin Juan', 1, 'hashed_password_admin1', 'e5f6a7b8-c9d0-1234-ef01-567890123456'),
-    ('2b3c4d5e-6789-01bc-def0-2345678901bc', 'Empleado María', 2, 'hashed_password_emp1', 'f6a7b8c9-d0e1-2345-f012-678901234567'),
-    ('3c4d5e6f-7890-12cd-ef01-3456789012cd', 'Empleado Carlos', 2, 'hashed_password_emp2', 'g7b8c9d0-e1f2-3456-0123-789012345678'),
-    ('4d5e6f7g-8901-23de-f012-4567890123de', 'Admin Laura', 1, 'hashed_password_admin2', 'h8c9d0e1-f2a3-4567-1234-890123456789'),
-    ('5e6f7g8h-9012-34ef-0123-5678901234ef', 'Empleado Pedro', 2, 'hashed_password_emp3', 'i9d0e1f2-a3b4-5678-2345-901234567890'),
-    ('6f7g8h9i-0123-45fg-1234-6789012345fg', 'Empleado Ana', 2, 'hashed_password_emp4', 'j0e1f2a3-b4c5-6789-3456-012345678901'),
-    ('7g8h9i0j-1234-56gh-2345-7890123456gh', 'Admin Luis', 1, 'hashed_password_admin3', 'e5f6a7b8-c9d0-1234-ef01-567890123456'),
-    ('8h9i0j1k-2345-67hi-3456-8901234567hi', 'Empleado Sofía', 2, 'hashed_password_emp5', 'e5f6a7b8-c9d0-1234-ef01-567890123456'),
-    ('9i0j1k2l-3456-78ij-4567-9012345678ij', 'Empleado Diego', 2, 'hashed_password_emp6', 'j0e1f2a3-b4c5-6789-3456-012345678901'),
-    ('0j1k2l3m-4567-89jk-5678-0123456789jk', 'Admin Valentina', 1, 'hashed_password_admin4', 'j0e1f2a3-b4c5-6789-3456-012345678901');
 
+INSERT INTO sec_role (`usr_created_by`, `usr_id_status`, `usr_modified_by`, `usr_role_name`)
+VALUES
+    (1, 1, 1, 'ADMIN'),
+    (1, 1, 1, 'GERENTE'),
+    (1, 1, 1, 'USER');
+
+INSERT INTO sec_user (`use_created_by`, `use_email`, `use_first_name`, `use_id_status`, `use_last_name`, `use_modified_by`, `use_passwd`,`image_id`)
+VALUES
+    (1, 'user_1@example.com', 'Alice', 1, 'Smith', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','e5f6a7b8-c9d0-1234-ef01-567890123456'),
+    (1, 'user_2@example.com', 'Bob', 1, 'Johnson', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','f6a7b8c9-d0e1-2345-f012-678901234567'),
+    (1, 'user_3@example.com', 'Charlie', 1, 'Brown', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','g7b8c9d0-e1f2-3456-0123-789012345678');
+
+INSERT INTO sec_user_role_relation (`urr_id_user`, `urr_id_user_role`)
+VALUES
+    (1, 1), -- Alice es ADMIN
+    (1, 2), -- Alice es GERENTE
+    (1, 3), -- Alice es USER
+    (2, 2), -- Bob es GERENTE
+    (2, 3), -- Bob es USER
+    (3, 3); -- Charlie es USER
 
