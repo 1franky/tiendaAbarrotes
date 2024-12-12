@@ -18,7 +18,6 @@ class PVIFranciscoLopezApplicationTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println("Francisco Miztli Lopez Salinas");
 		System.out.println("Cargando schema y datos");
 	}
 

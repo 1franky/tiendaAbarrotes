@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/inicio", "/home", "/", "/login").permitAll()
                         .requestMatchers("/css/**", "/favicon.ico", "/templates/**", "/token", "/index").permitAll()
                         .requestMatchers("/bootstrap/**", "/iconos/**", "/image/**", "/js/**").permitAll()
-                        .requestMatchers("/category/**", "/users/").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/category/**", "/users/", "/ticket/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/proveedor/**").hasAnyAuthority("ADMIN", "GERENTE")
                         .requestMatchers("/product/**").hasAnyAuthority("ADMIN", "GERENTE", "USER")
                         .anyRequest().authenticated()
