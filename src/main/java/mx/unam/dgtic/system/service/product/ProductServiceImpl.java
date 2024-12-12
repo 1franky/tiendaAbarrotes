@@ -144,6 +144,11 @@ public class ProductServiceImpl implements ProductService {
         return Boolean.TRUE;
     }
 
+    @Override
+    public List<Product> getProductos() {
+        return productRepository.findAll();
+    }
+
     private void deleteCampos(Page<Product> products) {
         for (Product product : products.getContent()) {
             product.getProveedor().setCategory(null);

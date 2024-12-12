@@ -65,6 +65,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proveedor_id")
     @ToString.Exclude
+    @JsonIgnore
     private Proveedor proveedor;
 
     @ManyToOne(fetch = FetchType.LAZY)

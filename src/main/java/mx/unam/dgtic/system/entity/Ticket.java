@@ -1,5 +1,6 @@
 package mx.unam.dgtic.system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -27,6 +29,7 @@ import java.util.Set;
                         "WHERE t.client.id = :clientId"
         )
 })
+@Builder
 public class Ticket {
     @Id
     @Column(name = "id", nullable = false, length = 40)
@@ -42,15 +45,17 @@ public class Ticket {
     private Instant fecha;
 
     @Column(name = "total")
-    private Float total;
+    private BigDecimal total;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     @ToString.Exclude
+    @JsonIgnore
     private Client client;
 
     @OneToMany(mappedBy = "ticket")
     @ToString.Exclude
+    @JsonIgnore
     private Set<ProductsTicket> productsTickets = new LinkedHashSet<>();
 
     @Override
@@ -67,17 +72,5 @@ public class Ticket {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
-    }
-
-    @Override
-    public String toString() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        mapper.registerModule(new JavaTimeModule());
-        try {
-            return mapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Error al convertir el objeto Product a JSON " + e.getMessage());
-        }
     }
 }

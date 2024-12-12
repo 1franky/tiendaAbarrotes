@@ -95,9 +95,11 @@ CREATE TABLE Tickets (
 CREATE TABLE Products_Tickets (
     `id` VARCHAR(40) PRIMARY KEY,
     `precioVenta` float, -- Se guarda el precio de venta aqui para que al momento de actualizar el precio de un producto no se modifuque el precio del ticket
+    `cantidad` integer,
     `product_id` VARCHAR(40),
     `ticket_id` VARCHAR(40),
-    CHECK(precioVenta > 0)
+    CHECK(precioVenta > 0),
+    CHECK ( cantidad > 0 )
 );
 
 create table sec_user_role_relation (
