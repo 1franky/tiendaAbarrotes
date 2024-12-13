@@ -1,14 +1,14 @@
 package mx.unam.dgtic.system.service;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import lombok.extern.slf4j.Slf4j;
 import mx.unam.dgtic.system.entity.Product;
 import mx.unam.dgtic.system.entity.ProductsTicket;
 import mx.unam.dgtic.system.entity.Ticket;
 import org.springframework.stereotype.Service;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;

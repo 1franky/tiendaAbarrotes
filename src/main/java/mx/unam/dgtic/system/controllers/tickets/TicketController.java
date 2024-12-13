@@ -2,7 +2,6 @@ package mx.unam.dgtic.system.controllers.tickets;
 
 import com.itextpdf.text.DocumentException;
 import jakarta.mail.MessagingException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mx.unam.dgtic.system.entity.ProductsTicket;
@@ -21,7 +20,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author FRANCISCO MIZTLI LOPEZ SALINAS

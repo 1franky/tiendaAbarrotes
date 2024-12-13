@@ -3,7 +3,6 @@ package mx.unam.dgtic.system.controllers.proveedor;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import mx.unam.dgtic.system.entity.Category;
 import mx.unam.dgtic.system.entity.Proveedor;
 import mx.unam.dgtic.system.service.BaseService;
 import mx.unam.dgtic.system.service.category.CategoryService;

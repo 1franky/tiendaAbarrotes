@@ -5,7 +5,6 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import mx.unam.dgtic.system.entity.Product;
 import mx.unam.dgtic.system.entity.ProductsTicket;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
