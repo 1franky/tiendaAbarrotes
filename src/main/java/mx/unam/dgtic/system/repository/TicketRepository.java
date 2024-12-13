@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 public interface TicketRepository extends JpaRepository<Ticket, String> {
     List<Ticket> findByFechaBetween(Instant startDate, Instant endDate);
