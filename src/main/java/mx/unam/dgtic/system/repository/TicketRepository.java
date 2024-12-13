@@ -24,5 +24,7 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
 //            "LOWER(CASE WHEN p.activo = true THEN 'true' ELSE 'false' END) LIKE LOWER(CONCAT('%', :search, '%'))")
     Page<Ticket> searchByAllColumns(@Param("search") String search, Pageable pageable);
 
+    List<Ticket> findByCreatedAtBetweenOrderByCreatedAtAsc(Instant createdAtStart, Instant createdAtEnd);
+
 
 }

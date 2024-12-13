@@ -123,7 +123,7 @@ create table sec_user (
     `use_id` bigint auto_increment not null,
     `use_created_by` bigint not null,
     `use_created_date` timestamp DEFAULT CURRENT_TIMESTAMP not null,
-    `use_email` varchar(45) not null,
+    `use_email` varchar(45) not null unique,
     `use_first_name` varchar(20) not null,
     `use_id_status` integer not null,
     `use_last_name` varchar(20) not null,
