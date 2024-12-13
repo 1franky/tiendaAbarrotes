@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
@@ -17,13 +18,16 @@ import java.util.Objects;
 @ToString
 @Entity
 @Table(name = "Products_Tickets")
-public class ProductsTicket {
+public class        ProductsTicket {
     @Id
     @Column(name = "id", nullable = false, length = 40)
     private String id;
 
+    @Column(name = "cantidad")
+    private Integer cantidad;
+
     @Column(name = "precioVenta")
-    private Float precioVenta;
+    private BigDecimal precioVenta;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -34,6 +38,7 @@ public class ProductsTicket {
     @JoinColumn(name = "ticket_id")
     @ToString.Exclude
     private Ticket ticket;
+
 
     @Override
     public final boolean equals(Object o) {

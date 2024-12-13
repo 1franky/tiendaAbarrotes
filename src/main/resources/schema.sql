@@ -95,9 +95,11 @@ CREATE TABLE Tickets (
 CREATE TABLE Products_Tickets (
     `id` VARCHAR(40) PRIMARY KEY,
     `precioVenta` float, -- Se guarda el precio de venta aqui para que al momento de actualizar el precio de un producto no se modifuque el precio del ticket
+    `cantidad` integer,
     `product_id` VARCHAR(40),
     `ticket_id` VARCHAR(40),
-    CHECK(precioVenta > 0)
+    CHECK(precioVenta > 0),
+    CHECK ( cantidad > 0 )
 );
 
 create table sec_user_role_relation (
@@ -121,7 +123,7 @@ create table sec_user (
     `use_id` bigint auto_increment not null,
     `use_created_by` bigint not null,
     `use_created_date` timestamp DEFAULT CURRENT_TIMESTAMP not null,
-    `use_email` varchar(45) not null,
+    `use_email` varchar(45) not null unique,
     `use_first_name` varchar(20) not null,
     `use_id_status` integer not null,
     `use_last_name` varchar(20) not null,

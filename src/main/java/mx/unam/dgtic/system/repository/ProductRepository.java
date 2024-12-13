@@ -13,6 +13,10 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String> {
 
+    List<Product> findByExistenciaLessThanEqual(Integer existencia);
+
+    List<Product> findByExistenciaLessThanEqualOrderByProveedor_NameAscCategory_NameAsc(Integer existencia);
+
     @Query("SELECT p FROM Product p WHERE " +
             "LOWER(FUNCTION('TO_CHAR', p.createdAt, 'YYYY-MM-DD HH24:MI:SS')) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
             "LOWER(FUNCTION('TO_CHAR', p.updatedAt, 'YYYY-MM-DD HH24:MI:SS')) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
@@ -52,6 +56,5 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     Page<Product> searchByAllColumnsAndProveedorId(@Param("search") String search, @Param("id") String id, Pageable pageable);
 
     Page<Product> findByProveedor_Id(String id, Pageable pageable);
-
 
 }

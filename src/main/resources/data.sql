@@ -90,21 +90,19 @@ INSERT INTO Tickets (id, created_at, updated_at, fecha, total, client_id) VALUES
     ('5e6f7g8h-9012-34ef-0123-5678901234ef', '2024-02-05 14:00:00', '2024-02-05 14:00:00', '2024-02-05 14:00:00', 50.0, '5e6f7g8h-9012-34ef-0123-5678901234ef'),
     ('6f7g8h9i-0123-45fg-1234-6789012345fg', '2024-02-06 15:00:00', '2024-02-06 15:00:00', '2024-02-06 15:00:00', 180.0, '6f7g8h9i-0123-45fg-1234-6789012345fg'),
     ('7g8h9i0j-1234-56gh-2345-7890123456gh', '2024-02-07 16:00:00', '2024-02-07 16:00:00', '2024-02-07 16:00:00', 220.0, '7g8h9i0j-1234-56gh-2345-7890123456gh'),
-    ('8h9i0j1k-2345-67hi-3456-8901234567hi', '2024-02-08 17:00:00', '2024-02-08 17:00:00', '2024-02-08 17:00:00', 90.0, '8h9i0j1k-2345-67hi-3456-8901234567hi'),
-    ('9i0j1k2l-3456-78ij-4567-9012345678ij', '2024-02-09 18:00:00', '2024-02-09 18:00:00', '2024-02-09 18:00:00', 130.0, '9i0j1k2l-3456-78ij-4567-9012345678ij'),
-    ('0j1k2l3m-4567-89jk-5678-0123456789jk', '2024-02-10 19:00:00', '2024-02-10 19:00:00', '2024-02-10 19:00:00', 60.0, '0j1k2l3m-4567-89jk-5678-0123456789jk');
+    ('8h9i0j1k-2345-67hi-3456-8901234567hi', '2024-02-08 17:00:00', '2024-02-08 17:00:00', '2024-02-08 17:00:00', 90.0, '8h9i0j1k-2345-67hi-3456-8901234567hi');
 
-INSERT INTO Products_Tickets (id, precioVenta, product_id, ticket_id) VALUES
-    ('pt-1a2b3c4d-5678-90ab-cdef-1234567890ab', 20.0, '1a2b3c4d-5678-90ab-cdef-1234567890ab', '1a2b3c4d-5678-90ab-cdef-1234567890ab'),
-    ('pt-2b3c4d5e-6789-01bc-def0-2345678901bc', 25.0, '2b3c4d5e-6789-01bc-def0-2345678901bc', '1a2b3c4d-5678-90ab-cdef-1234567890ab'),
-    ('pt-3c4d5e6f-7890-12cd-ef01-3456789012cd', 15.0, '3c4d5e6f-7890-12cd-ef01-3456789012cd', '2b3c4d5e-6789-01bc-def0-2345678901bc'),
-    ('pt-4d5e6f7g-8901-23de-f012-4567890123de', 18.0, '4d5e6f7g-8901-23de-f012-4567890123de', '2b3c4d5e-6789-01bc-def0-2345678901bc'),
-    ('pt-5e6f7g8h-9012-34ef-0123-5678901234ef', 50.0, '5e6f7g8h-9012-34ef-0123-5678901234ef', '3c4d5e6f-7890-12cd-ef01-3456789012cd'),
-    ('pt-6f7g8h9i-0123-45fg-1234-6789012345fg', 10.0, '6f7g8h9i-0123-45fg-1234-6789012345fg', '4d5e6f7g-8901-23de-f012-4567890123de'),
-    ('pt-7g8h9i0j-1234-56gh-2345-7890123456gh', 12.0, '7g8h9i0j-1234-56gh-2345-7890123456gh', '5e6f7g8h-9012-34ef-0123-5678901234ef'),
-    ('pt-8h9i0j1k-2345-67hi-3456-8901234567hi', 8.0, '8h9i0j1k-2345-67hi-3456-8901234567hi', '6f7g8h9i-0123-45fg-1234-6789012345fg'),
-    ('pt-9i0j1k2l-3456-78ij-4567-9012345678ij', 30.0, '9i0j1k2l-3456-78ij-4567-9012345678ij', '7g8h9i0j-1234-56gh-2345-7890123456gh'),
-    ('pt-0j1k2l3m-4567-89jk-5678-0123456789jk', 100.0, '0j1k2l3m-4567-89jk-5678-0123456789jk', '8h9i0j1k-2345-67hi-3456-8901234567hi');
+INSERT INTO Products_Tickets (id, precioVenta, product_id, ticket_id, cantidad) VALUES
+    ('pt-1a2b3c4d-5678-90ab-cdef-1234567890ab', 20.0, '1a2b3c4d-5678-90ab-cdef-1234567890ab', '1a2b3c4d-5678-90ab-cdef-1234567890ab', 1),
+    ('pt-2b3c4d5e-6789-01bc-def0-2345678901bc', 25.0, '2b3c4d5e-6789-01bc-def0-2345678901bc', '1a2b3c4d-5678-90ab-cdef-1234567890ab', 2),
+    ('pt-3c4d5e6f-7890-12cd-ef01-3456789012cd', 15.0, '3c4d5e6f-7890-12cd-ef01-3456789012cd', '2b3c4d5e-6789-01bc-def0-2345678901bc', 4),
+    ('pt-4d5e6f7g-8901-23de-f012-4567890123de', 18.0, '4d5e6f7g-8901-23de-f012-4567890123de', '2b3c4d5e-6789-01bc-def0-2345678901bc', 6),
+    ('pt-5e6f7g8h-9012-34ef-0123-5678901234ef', 50.0, '5e6f7g8h-9012-34ef-0123-5678901234ef', '3c4d5e6f-7890-12cd-ef01-3456789012cd', 1),
+    ('pt-6f7g8h9i-0123-45fg-1234-6789012345fg', 10.0, '6f7g8h9i-0123-45fg-1234-6789012345fg', '4d5e6f7g-8901-23de-f012-4567890123de', 7),
+    ('pt-7g8h9i0j-1234-56gh-2345-7890123456gh', 12.0, '7g8h9i0j-1234-56gh-2345-7890123456gh', '5e6f7g8h-9012-34ef-0123-5678901234ef', 3),
+    ('pt-8h9i0j1k-2345-67hi-3456-8901234567hi', 8.0, '8h9i0j1k-2345-67hi-3456-8901234567hi', '6f7g8h9i-0123-45fg-1234-6789012345fg', 3),
+    ('pt-9i0j1k2l-3456-78ij-4567-9012345678ij', 30.0, '9i0j1k2l-3456-78ij-4567-9012345678ij', '7g8h9i0j-1234-56gh-2345-7890123456gh', 6),
+    ('pt-0j1k2l3m-4567-89jk-5678-0123456789jk', 100.0, '0j1k2l3m-4567-89jk-5678-0123456789jk', '8h9i0j1k-2345-67hi-3456-8901234567hi', 5);
 
 
 INSERT INTO sec_role (`usr_created_by`, `usr_id_status`, `usr_modified_by`, `usr_role_name`)
@@ -115,16 +113,16 @@ VALUES
 
 INSERT INTO sec_user (`use_created_by`, `use_email`, `use_first_name`, `use_id_status`, `use_last_name`, `use_modified_by`, `use_passwd`,`image_id`)
 VALUES
-    (1, 'user_1@example.com', 'Alice', 1, 'Smith', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','e5f6a7b8-c9d0-1234-ef01-567890123456'),
-    (1, 'user_2@example.com', 'Bob', 1, 'Johnson', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','f6a7b8c9-d0e1-2345-f012-678901234567'),
-    (1, 'user_3@example.com', 'Charlie', 1, 'Brown', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','g7b8c9d0-e1f2-3456-0123-789012345678');
+    (1, 'user_1@example.com', 'Elon', 1, 'Musk', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','e5f6a7b8-c9d0-1234-ef01-567890123456'),
+    (1, 'user_2@example.com', 'Bill', 1, 'Gates', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','f6a7b8c9-d0e1-2345-f012-678901234567'),
+    (1, 'user_3@example.com', 'Jeff', 1, 'Bezos', 1, '$2a$11$dDCPTJfr5yyH9sDTZYFOtutU1nVejYVVu6.djUg7misIiOykBwO46','g7b8c9d0-e1f2-3456-0123-789012345678');
 
 INSERT INTO sec_user_role_relation (`urr_id_user`, `urr_id_user_role`)
 VALUES
-    (1, 1), -- Alice es ADMIN
-    (1, 2), -- Alice es GERENTE
-    (1, 3), -- Alice es USER
-    (2, 2), -- Bob es GERENTE
-    (2, 3), -- Bob es USER
-    (3, 3); -- Charlie es USER
+    (1, 1), -- Elon es ADMIN
+    (1, 2), -- Elon es GERENTE
+    (1, 3), -- Elon es USER
+    (2, 2), -- Bill es GERENTE
+    (2, 3), -- Bill es USER
+    (3, 3); -- Jeff es USER
 

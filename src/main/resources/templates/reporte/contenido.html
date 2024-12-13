@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Spring</title>
+
+    <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/jquery-ui.min.css}" rel="stylesheet">
+    <!--    <link th:href="@{/css/owl.carousel.min.css}" rel="stylesheet">-->
+    <!--    <link th:href="@{/css/style.css}" rel="stylesheet">-->
+    <link th:href="@{/css/base.css}" rel="stylesheet">
+</head>
+<body>
+
+
+
+<!-- Inventario bajo -->
+<div th:fragment="inventarioBajo" class="col-auto">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inventarioModal">
+        Generar Reporte por Inventario Bajo
+    </button>
+</div>
+
+
+<!-- Modal para Reporte de Inventario Bajo -->
+<div th:fragment="modalInventarioBajo" class="col-auto">
+    <div class="modal fade" id="inventarioModal" tabindex="-1" aria-labelledby="inventarioModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="inventarioModalLabel">Reporte de Inventario Bajo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/reporte/inventario}" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="numProductos" class="form-label">Productos por debajo de:</label>
+                            <input type="number" class="form-control" id="numProductos" name="numProductos" placeholder="5" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="example@example.com" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Enviar Reporte</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Botón para Reporte de Ventas -->
+<div th:fragment="reporteVentas" class="col-auto">
+    <button type="button" class="btn btn-secondary mt-3" data-bs-toggle="modal" data-bs-target="#ventasModal">
+        Generar Reporte de Ventas
+    </button>
+</div>
+
+<!-- Modal para Reporte de Ventas -->
+<div th:fragment="modalReporteVentas" class="col-auto">
+    <div class="modal fade" id="ventasModal" tabindex="-1" aria-labelledby="ventasModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ventasModalLabel">Reporte de Ventas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/reporte/ventas}" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="tipoReporte" class="form-label">Tipo de Reporte</label>
+                            <select class="form-select" id="tipoReporte" name="tipoReporte" required>
+                                <option value="hoy">Ventas del Día</option>
+                                <option value="rango">Rango de Fechas</option>
+                            </select>
+                        </div>
+                        <div id="rangoFechas" style="display: none;">
+                            <div class="mb-3">
+                                <label for="fechaInicio" class="form-label">Fecha Inicio</label>
+                                <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
+                            </div>
+                            <div class="mb-3">
+                                <label for="fechaFin" class="form-label">Fecha Fin</label>
+                                <input type="date" class="form-control" id="fechaFin" name="fechaFin">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="example@example.com" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Generar Reporte</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!--Scripts-->
+<script type="text/javascript" th:fragment="javascript">
+
+    document.getElementById('tipoReporte').addEventListener('change', function () {
+        const rangoFechas = document.getElementById('rangoFechas');
+        if (this.value === 'rango') {
+            rangoFechas.style.display = 'block';
+        } else {
+            rangoFechas.style.display = 'none';
+        }
+    });
+
+
+</script>
+
+
+
+
+</body>
+</html>
