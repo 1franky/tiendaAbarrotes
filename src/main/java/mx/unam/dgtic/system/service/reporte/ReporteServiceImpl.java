@@ -5,7 +5,6 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mx.unam.dgtic.system.entity.Product;
-import mx.unam.dgtic.system.entity.ProductsTicket;
 import mx.unam.dgtic.system.entity.Ticket;
 import mx.unam.dgtic.system.repository.ProductRepository;
 import mx.unam.dgtic.system.repository.ProductsTicketRepository;

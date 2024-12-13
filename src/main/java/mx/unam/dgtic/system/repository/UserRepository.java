@@ -1,7 +1,6 @@
 package mx.unam.dgtic.system.repository;
 
 import mx.unam.dgtic.auth.model.UserInfo;
-import mx.unam.dgtic.system.entity.Proveedor;
 import mx.unam.dgtic.system.entity.Roles;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
