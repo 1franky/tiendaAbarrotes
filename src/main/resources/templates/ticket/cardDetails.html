@@ -18,7 +18,6 @@
     </div>
 
 
-
     <div class="container mt-5">
         <div class="card shadow-lg border-0">
             <div class="card-header ticket-header">
@@ -97,36 +96,50 @@
                     <button class="btn btn-primary" onclick="window.print()">
                         <i class="fas fa-print"></i> Imprimir
                     </button>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#emailModal">
+                        <i class="fas fa-envelope"></i> Enviar por Email
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
 
-
-
-
 </main>
 
 
 
-<!--<div th:fragment="modalEliminar" class="modal" tabindex="-1" id="modaEliminar">-->
-<!--    <div class="modal-dialog">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h5 class="modal-title">¿Estás seguro?</h5>-->
-<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                <p>¿Seguro que deseas eliminar el Proveedor?</p>-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>-->
-<!--                <button type="button" class="btn btn-danger" onclick="confirmarEliminar()">Eliminar</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+
+
+<!-- Email Modal -->
+<div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="emailModalLabel">Enviar Ticket por Correo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="emailForm" th:action="@{/ticket/send-email}" method="post">
+                    <input type="hidden" name="id" th:value="${productsTickets[0].ticket.id}">
+                    <div class="mb-3">
+                        <label for="emailInput" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="emailInput" name="email" required
+                               placeholder="Ingrese el correo electrónico del cliente">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 <footer th:replace="~{plantillas/base :: footer}"></footer>

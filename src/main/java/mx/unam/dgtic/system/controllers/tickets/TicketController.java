@@ -1,13 +1,13 @@
 package mx.unam.dgtic.system.controllers.tickets;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itextpdf.text.DocumentException;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mx.unam.dgtic.system.entity.ProductsTicket;
 import mx.unam.dgtic.system.entity.Ticket;
+import mx.unam.dgtic.system.service.EmailService;
 import mx.unam.dgtic.system.service.product.ProductService;
 import mx.unam.dgtic.system.service.ticket.TicketService;
 import mx.unam.dgtic.system.utils.RenderPagina;
@@ -42,6 +42,8 @@ public class TicketController {
 
     private final ProductService productService;
 
+    private final EmailService emailService;
+
     protected String getEntityName() {
         return "ticket";
     }
@@ -55,8 +57,6 @@ public class TicketController {
         Map<String, List<Object>> select = new HashMap<>();
         select.put("productsList", new ArrayList<>());
 
-
-        // Products
         productService.getProductos().forEach(select.get("productsList")::add);
 
         return select;
@@ -69,9 +69,36 @@ public class TicketController {
         List<ProductsTicket> productsTickets =  ticketService.getTicket(id);
 
         log.info("Tamaño del ticket: {}", productsTickets.size());
+        if (productsTickets.isEmpty() ) {
+            log.error("No tienes productos con id: {}", id);
+            return "redirect:/ticket/";
+        }
 
         model.addAttribute("productsTickets", productsTickets);
         return "ticket/cardDetails";
+    }
+
+    @PostMapping("/send-email")
+    public String sendEmail(@RequestParam("id") String ticketId,
+                            @RequestParam("email") String email,
+                            RedirectAttributes flash) {
+
+        log.info("Enviando ticket con id: {}", ticketId);
+        List<ProductsTicket> productsTickets =  ticketService.getTicket(ticketId);
+        try {
+            emailService.sendTicketByEmail(email, productsTickets);
+            flash.addFlashAttribute("success", "Ticket enviado a: " + email);
+        } catch (MessagingException e) {
+            log.error("Error al enviar el email: {}", e.getMessage());
+            flash.addFlashAttribute("error", "Error al enviar email.");
+        } catch (DocumentException e) {
+            log.error("Error al generar el documento: {}", e.getMessage());
+            flash.addFlashAttribute("error", "Error al generar el documento.");
+        }
+
+
+        return "redirect:/ticket/details/" + ticketId;
+
     }
 
     @GetMapping("/")
@@ -123,13 +150,6 @@ public class TicketController {
                              RedirectAttributes flash){
 
         log.info("guardar: {}", productsJson);
-
-
-//        flash.addFlashAttribute(getEntityName(), entity);
-//        if (result.hasErrors()) {
-//            errorsValidation(result, flash, entity);
-//            return "redirect:/ticket/";
-//        }
 
         try {
             boolean r = ticketService.saveTicket(productsJson);

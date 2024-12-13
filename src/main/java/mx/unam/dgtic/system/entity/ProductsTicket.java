@@ -18,7 +18,7 @@ import java.util.Objects;
 @ToString
 @Entity
 @Table(name = "Products_Tickets")
-public class ProductsTicket {
+public class        ProductsTicket {
     @Id
     @Column(name = "id", nullable = false, length = 40)
     private String id;

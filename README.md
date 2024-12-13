@@ -8,8 +8,20 @@
 ## 📋 Descripción
 Sistema web para la gestión y administración de una tienda de abarrotes. Desarrollado como proyecto final para el Diplomado en Java.
 
-### 👨‍💻 Autor
-Francisco Miztli López Salinas
+## 👨‍💻 Autor
+#### Francisco Miztli López Salinas
+
+# Actualización importante
+
+Se añadió modulo de de seguridad y las rutas estan protegidas.
+## La contraseña para cualquier usuario es admin123
+
+```
+correos de usuario
+user_1@example.com -> todos los permisos
+user_2@example.com -> permisos menores
+user_3@example.com -> permisos restringidos solo accede a una ruta
+```
 
 ## 🛠️ Tecnologías Utilizadas
 - Java (JDK 17+)
